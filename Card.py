@@ -5,7 +5,6 @@ acceptable colors will be:
     green
     black
     white
-
 """
 
 class Card:

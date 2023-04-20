@@ -6,10 +6,6 @@ acceptable colors will be:
     green
     black
     white
-
-I still cant decide if we should count 
-amounts as a feature of the coin object
-or if we should just count them seperately
 """
 
 class ChipStack: #This class reperesents a stack of chips
