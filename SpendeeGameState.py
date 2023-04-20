@@ -48,7 +48,7 @@ class SpendeeGameState():
         Returns true if a player has reached the point goal.
         """
         for player in self.players:
-            if player.points == self.point_goal:
+            if player.points >= self.point_goal:
                 return True
         return False
     
