@@ -53,3 +53,7 @@ class Player():
         # returns the number of unique chip colors
         colors = [i.color for i in self.chips]
         return len(set(colors))
+
+    def add_card(self,card):
+        self.cards.append(card)
+
