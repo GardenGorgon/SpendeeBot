@@ -71,7 +71,7 @@ class SpendeeGameState():
         return ""
 
     def give_player_noble(self,player,noble):
-        for color in ["blue","red","green","black","white"]:
+        for color in ["blue", "red", "green", "black", "white"]:
             if player.num_color_cards(color) != noble.cost[color]:
                 return False
         #otherwise give the player 3 points and remove the noble from the game.
