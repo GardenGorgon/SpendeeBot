@@ -2,23 +2,24 @@
 CS4100
 
 This class represents the state of a game of Spendee. 
-Script moves for a player:
-
-grabChips [color] [number] [color] [number] ... until 5 chips are selected
-buyCard   [name?]
-help      displays instructions
-
 """
 import random
 
 from BoardState import BoardState
 from Player import Player
+from Action import Action
 import csv
 
 from Noble import Noble
 from Card import Card
 
 commands = ['grabChips', 'buyCard', 'help']
+
+GOLD_GEM = 'y'
+GEMS = ('r', 'g', 'b', 'w', 'k', GOLD_GEM) # red, green, blue, white, black, yellow(gold)
+ACTIONS = ('t', 'r', 'p', 'h') # take gems, reserve card, purchase card, purchase hand card
+CARD_LEVELS = 3
+
 
 class SpendeeGameState():
 
@@ -32,6 +33,28 @@ class SpendeeGameState():
         self.point_goal = point_goal
         self.board = board
         self.rules = rules
+
+    def __str__(self):
+        s = 'move:' + str(self.num_moves) + ' player:' + str(self.player_to_move) + '\n'
+        
+        s += 'nobles: '
+        for noble in self.nobles:
+            s += str(noble) + ' '
+        s += '\n'
+
+        for n, card_list in enumerate(reversed(self.cards)):
+            s += str(CARD_LEVELS - n) + ': '
+            for card in card_list:
+                if card:
+                    s += str(card) + ' '
+            s += '\n'
+
+        s += 'gems:' + str(self.gems) + '\n'
+
+        for player in self.players:
+            s += str(player)
+
+        return s 
 
     def play_game(self):
         """
@@ -50,6 +73,100 @@ class SpendeeGameState():
         for player in self.players:
             if player.points == self.point_goal:
                 print(player.name + " won!")
+
+    def new_table_card(self, level, pos):
+        '''Put new card on table if player reserved/purchased card'''
+        new_card = None
+        if self.decks[level]:
+            new_card = self.decks[level].pop()
+        self.cards[level][pos] = new_card
+
+    def action(self, action):
+        player = self.players[self.player_to_move]
+
+        if action.type == Action.take: 
+            gems = action.gems
+            unique_gems = list(set(gems))
+            if len(gems) > self.rules.max_gems_take:
+                raise AttributeError('Can\'t take more than {} gems'.format(self.rules.max_gems_take))
+            if len(unique_gems) == 1: # all same color
+                if self.gems.get(unique_gems[0]) < self.rules.min_same_gems_stack:
+                    raise AttributeError('Should be at least {} gems in stack'.format(self.rules.min_same_gems_stack))
+                if len(gems) != 1 and len(gems) > self.rules.max_same_gems_take: 
+                    raise AttributeError('Can\'t take more than {} identical gems'.format(self.rules.max_same_gems_take))
+            if len(unique_gems) > 1 and len(unique_gems) != len(gems): 
+                raise AttributeError('You can either take all identical or all different gems')
+            if player.gem_count + len(gems) > self.rules.max_player_gems:
+                raise AttributeError('Player can\'t have more than {} gems'.format(self.rules.max_player_gems))
+
+            for gem in gems:
+                if gem not in GEMS:
+                    raise AttributeError('Invalid gem {}'.format(gem))
+                if gem == GOLD_GEM:
+                    raise AttributeError('You are not allowed to take gold ({}) gem'.format(GOLD_GEM))
+                if self.gems.get(gem) == 0:
+                    raise AttributeError('Not inough {} gems on table'.format(gem))
+                
+                player.gems.add(gem, 1)
+                self.gems.add(gem, -1)
+
+        elif action.type == Action.reserve: 
+            level, pos = action.pos
+            if level < 0 or level >= CARD_LEVELS:
+                raise AttributeError('Invalid deck level {}'.format(level + 1))
+            if pos < -1 or pos >= len(self.cards[level]):
+                raise AttributeError('Invalid card position {}'.format(pos + 1))
+            if len(player.hand_cards) >= self.rules.max_hand_cards:
+                raise AttributeError('Player can\'t reserve more than {} cards'.format(self.rules.max_hand_cards))
+
+            card = None
+            if pos >= 0:
+                card = self.cards[level][pos]
+                if card is None:
+                    raise AttributeError('Card already taken')
+                self.new_table_card(level, pos)
+            if pos == -1: # blind reserve from deck
+                if not self.decks[level]:
+                    raise AttributeError('Deck {} is empty'.format(level + 1))
+                card = self.decks[level].pop()
+            player.hand_cards.append(card)
+            if self.gems.get(GOLD_GEM) > 0:
+                player.gems.add(GOLD_GEM, 1)
+                self.gems.add(GOLD_GEM, -1)
+
+        elif action.type == Action.purchase: 
+            level, pos = action.pos 
+            if level < 0 or level >= CARD_LEVELS:
+                raise AttributeError('Invalid deck level {}'.format(level + 1))
+            if pos < 0 or pos >= self.rules.max_open_cards:
+                raise AttributeError('Invalid card position {}'.format(pos + 1))
+
+            card = self.cards[level][pos]
+            if not player.purchase_card(card):
+                raise AttributeError('Player can\'t afford card')
+            self.new_table_card(level, pos)
+
+            player.get_noble(self.nobles) # try to get noble
+
+        elif action.type == Action.purchase_hand: 
+            pos, = action.pos # position of card in hand
+            if pos < 0 or pos >= len(player.hand_cards):
+                raise AttributeError('Invalid card position in hand {}'.format(pos + 1))
+
+            card = player.hand_cards[pos]
+            if not player.purchase_card(card):
+                raise AttributeError('Player can\'t afford card')
+            player.hand_card.pop(pos) # remove card from hand
+
+            player.get_noble(self.nobles) # try to get noble
+
+        else:
+            raise AttributeError('Invalid action type {}'.format(action.type))
+
+        self.player_to_move = (self.player_to_move + 1) % self.rules.num_players
+        if self.player_to_move == 0: # round end
+            self.num_moves += 1
+    
 
     def is_game_over(self):
         """
@@ -73,7 +190,7 @@ class SpendeeGameState():
         with open('nobles.csv') as nobles_data:
             csv_reader = csv.DictReader(nobles_data)
             for row in csv_reader:
-                all_nobles.append(noble(row['points'], row['blue'], row['red'], row['green'], row['black'], row['white']))
+                all_nobles.append(Noble(row['points'], row['blue'], row['red'], row['green'], row['black'], row['white']))
         self.nobles_list = random.sample(all_nobles,3)
 
     def create_shop(self):
@@ -146,6 +263,11 @@ class SpendeeGameState():
             return 'white'
         else:
             return ""
+
+    def best_player(self):
+        '''Returns name of best player'''
+        scores = [(player.score, player.name) for player in self.players]
+        return sorted(scores, reverse=True)[0]
         
 
 class SplendorGameRules:
