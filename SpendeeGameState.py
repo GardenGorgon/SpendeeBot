@@ -6,23 +6,23 @@ Script moves for a player:
 
 grabChips [color] [number] [color] [number] ... until 5 chips are selected
 buyCard   [name?]
-buyNoble  [name?]
 help      displays instructions
 
 """
 import random
 
+from BoardState import BoardState
 from Player import Player
 import csv
 
-from noble import noble
+from Noble import Noble
 from Card import Card
 
-commands = ['grabChips', 'buyCard', 'buyNoble', 'help']
+commands = ['grabChips', 'buyCard', 'help']
 
 class SpendeeGameState():
 
-    def __init__(self, players: list[Player]=[], point_goal: int = 15):
+    def __init__(self, board: BoardState, rules, players: list[Player]=[], point_goal: int = 15):
         """
         players: the list of players in the game
         point_goal: the points needed to win the game. Defaults to 15. 
@@ -30,6 +30,8 @@ class SpendeeGameState():
         """
         self.players = players
         self.point_goal = point_goal
+        self.board = board
+        self.rules = rules
 
     def play_game(self):
         """
@@ -57,18 +59,6 @@ class SpendeeGameState():
             if player.points >= self.point_goal:
                 return True
         return False
-    
-    def display_board(self):
-        # TODO: 
-        return 0
-    
-    def display_instructions(self):
-        # TODO: 
-        return ""
-    
-    def display_action(self, action):
-        # TODO: 
-        return ""
 
     def give_player_noble(self,player,noble):
         for color in ["blue", "red", "green", "black", "white"]:
@@ -156,3 +146,19 @@ class SpendeeGameState():
             return 'white'
         else:
             return ""
+        
+
+class SplendorGameRules:
+    def __init__(self):
+        random.seed(1828)
+        self.num_players = 2
+        self.max_open_cards = 4 # open cards on table
+        self.win_points = 15
+        self.max_player_hand_cards = 10
+        self.max_nobles = self.num_players + 1
+        self.max_gems_take = 5       # max gems to take
+        self.max_same_gems_take = 3  # max same color gems to take
+        self.min_same_gems_stack = 4 # min size of gem stack from which you can take 2 same color gems
+        self.max_gems = 7 # max same color gems on table (except gold)
+        if self.num_players < 4:
+            self.max_gems = 2 + self.num_players
