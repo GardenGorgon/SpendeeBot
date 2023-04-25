@@ -9,7 +9,7 @@ acceptable colors will be:
 import csv
 from random import sample, shuffle, seed, randint, choice
 
-ACTIONS = ('t', 'b') # TODO: buy by saying 'b14'
+ACTIONS = ('t', 'b') 
 GEMS = ('blue', 'red', 'green', 'black', 'white', 'b', 'r', 'g', 'k', 'w') # Steph: okay, so here, I just add the symbols bc these are how script actions are read
 GEMS_SCRIPT_READER = {'b', 'r', 'g', 'k', 'w'} # this is how the gems get read in from the csv
 CARD_LEVELS = 3
@@ -88,6 +88,7 @@ class Noble: # Represents a noble.
             gem_script = string[2*n + 3]
             gem = SCRIPT_TO_GEM_MAP[gem_script]
             count = int(string[2*n + 4])
+            print("In parse str")
             chipstack.alterChip(gem, count) # alter nobles price per gem
         return points, chipstack
 
@@ -145,37 +146,42 @@ class SplendorPlayerState: #Players own the actions to change the boardstate now
     def purchase_card(self, card):
         '''Does card purchase. Returns false if player can't afford card'''
         """This section checks if the player can afford the card"""
-        #Creating the purchasing power total
+        # Creating the purchasing power total
+        print('card: ' + str(card))
         purchasingPower = ChipStack()
-        for key in purchasingPower.keys():
-            purchasingPower[key] = self.cards[key]
-            purchasingPower[key] += self.gems[key]
-        
-        #Creating how many coins you are missing if you are missing any
+        purchasingPowerDict = purchasingPower.gems
+        for key in purchasingPowerDict.keys():
+            purchasingPower.gems[key] = self.num_color_card(key) # I added this function 
+            purchasingPower.gems[key] += self.gems.gems[key] 
+            
+        # Creating how many coins you are missing if you are missing any
         shortage = ChipStack()
         wasShort = False
-        for color, amt in card.price.items():#Price is stored in the chipstack object so we call items on the price
-            diff = amt - purchasingPower.get(color)
+        for color, amt in card.price.items(): # Price is stored in the chipstack object so we call items on the price
+            diff = amt - purchasingPower.gems[color]
             if diff > 0:
+                print("Here")
                 shortage.alterChip(color, amt)
                 wasShort = True
         if wasShort == True:
-            print("You can't afford this card, you are short by this many coins: "+str(shortage))
+            print("You can't afford this card, you are short by this many coins: " + str(shortage))
             return False
         
         """This section actually does the purchasing"""        
         # if player can afford card, do actual payment
-        discountedPrice = ChipStack() #Discounted price is the price after the discount from your gem cards
-        for key in discountedPrice.keys():
-            discountedPrice[key] = card.price[key] - self.cards[key]
-            
-        for gem, price in discountedPrice.items(): #Spending the players gem chips
+        discountedPrice = ChipStack() # Discounted price is the price after the discount from your gem cards
+        discountedPriceDict = discountedPrice.gems
+        for key in discountedPriceDict.keys():
+            discountedPrice.gems[key] = card.price.gems[key] - self.cards.gems[key]
+        for gem, price in discountedPrice.gems.items(): # Spending the players gem chips
+            # print("gem: " + str(gem))
+            # print("price: " + str(price))
             self.gems.alterChip(gem, -price)
             
-        self.cards.alterChip(card.gem, 1)
-        self.points += card.points
+        self.cards.alterChip(card.gem, 1) # add bought card to player's cards
+        self.points += card.points             # add card reward for buying it
         return True
-    #We successfully bought the card
+    # We successfully bought the card
 
     def get_noble(self, nobles):
         '''Attempts to acquire noble card. In case of success removes taken noble from input list'''
@@ -183,7 +189,7 @@ class SplendorPlayerState: #Players own the actions to change the boardstate now
         for n, noble in enumerate(nobles):
             can_afford = True
             for gem, price in noble.price.items():
-                if self.cards.get(gem) < price:
+                if self.cards.gems[gem] < price: # access card chipstack 
                     can_afford = False
                     break
             if can_afford:
@@ -194,6 +200,10 @@ class SplendorPlayerState: #Players own the actions to change the boardstate now
             noble = nobles.pop(noble_list[n])
             self.points += noble.points
             #We just pop the noble from the available noble list, and add its points to the player
+    
+    def num_color_card(self, gem):
+        """ informs you how many cards of the given gem this player has"""
+        return self.cards.gems[gem]
 
 ACTIONS = ('t', 'b') #Take and buy
 #The format of our Actions will have to be t and then the colors seperated by space
@@ -323,24 +333,6 @@ class SplendorGameState:
             print("Action: t")
             gems = action.gems
             print("gems: " + str(gems))
-            
-            """This section is for preventing softlock.
-            If a player has more than the max number of gems, we take 3 away
-            """
-            playerGemCount = 0 # Calculating how many gems the player has
-            player_chips = player.gems.gems # gets kind weird here but chipstack has a dict called gems
-            for key in player_chips.keys():
-                playerGemCount += player_chips[key]
-                
-            if playerGemCount >= self.rules.max_player_gems:#To prevent softlock, we are randomly removing players chips if they get too greedy
-                print("You already have the max number of gems! Now I'm going to take some away at random! Bwa ha ha ha!")
-                for i in range(3):
-                    punishmentPiles = []
-                    for key in player.gems.keys:
-                        if player.gems[key] > 0:
-                            punishmentPiles.append(key)
-                    punishment = choice(punishmentPiles)
-                    self.gems.alterChip(punishment, -1)
                 
             """
             Just some leftovers we may or may not need. Might as well comment them.
@@ -352,18 +344,41 @@ class SplendorGameState:
             if player.gem_count + len(gems) > self.rules.max_player_gems:
                 raise AttributeError('Player can\'t have more than {} gems'.format(self.rules.max_player_gems))
             """
-            print("Do we get here?")
             # This part actually takes gems from the table
             self_chipstack = self.gems
             for gem in gems:
-                script_to_gem = SCRIPT_TO_GEM_MAP[gem]
+                script_to_gem = ""
+                try:
+                    script_to_gem = SCRIPT_TO_GEM_MAP[gem]  
+                except Exception:
+                    raise AttributeError('Invalid gem given {}'.format(str(gem)))
+
                 if gem not in GEMS:
                     raise AttributeError('Invalid gem {}'.format(gem))
                 if self_chipstack.gems[script_to_gem] == 0:
                     raise AttributeError('Not enough {} gems on table'.format(gem))
+                player.gems.alterChip(script_to_gem, 1) # add to player
+                self.gems.alterChip(script_to_gem, -1)  # remove from table 
+
+            """This section is for preventing softlock.
+            If a player has more than the max number of gems, we take 3 away
+            """
+            playerGemCount = 0 # Calculating how many gems the player has
+            player_chips = player.gems.gems # gets kind weird here but chipstack has a dict called gems
+            for key in player_chips.keys():
+                playerGemCount += player_chips[key]
                 
-                player.gems.alterChip(script_to_gem, 1)
-                self.gems.alterChip(script_to_gem, -1)
+            if playerGemCount >= self.rules.max_player_gems: # To prevent softlock, we are randomly removing players chips if they get too greedy
+                print("You already have the max number of gems! Now I'm going to take some away at random! Bwa ha ha ha!") # evil
+                for i in range(3):
+                    punishmentPiles = []
+                    player_chipstack_dict = player.gems.gems
+                    for key in player_chipstack_dict.keys():
+                        if player.gems.gems[key] > 0:
+                            punishmentPiles.append(key)
+                    punishment = choice(punishmentPiles)
+                    player.gems.alterChip(punishment, -1) # remove chip from player
+                    self.gems.alterChip(punishment, 1) # wait, should this be +1 if we are grabbing from the player?
 
         elif action.type == Action.purchase: 
             level, pos = action.pos 
@@ -382,10 +397,8 @@ class SplendorGameState:
 
 
         else: # The command was bad
-            print("Why do we get here?")
             raise AttributeError('Invalid action type {}'.format(action.type))
 
-        print("Do we get here?")
         self.player_to_move = (self.player_to_move + 1) % self.rules.num_players
         if self.player_to_move == 0: # round end
             self.num_moves += 1
