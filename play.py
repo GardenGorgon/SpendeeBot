@@ -24,7 +24,7 @@ class BasicAgent:
         player = game_state.players[game_state.player_to_move]
 
         # Game state cards/chips/nobles
-        game_state_chips = game_state.gems.gems
+        game_state_chips = game_state.gems.gems.copy()
 
         # First, look if it can afford any card
         for level, cards in enumerate(game_state.cards): # cards sets are ordered by their level
@@ -49,15 +49,14 @@ class BasicAgent:
         chips_taken = 0   
         chip_actions = [] # the gems to take
         while (chips_taken < num_chips_to_choose) and (board_num_chips != 0): # choose one rand. color at a time
-            color_chosen_name = sample(gem_types, 1)[0] # color randomly chosen
+            color_chosen_name = sample(gem_types, 1)[0]              # color randomly chosen
             color_chosen_script = GEM_TO_SCRIPT_MAP[color_chosen_name]
             print("color_chosen: " + str(color_chosen_name))
             if game_state_chips[color_chosen_name] != 0:
-                amt_chosen = 1
-                print("amt_chosen: " + str(amt_chosen))
                 chip_actions.append(color_chosen_script) 
                 chips_taken += 1
                 board_num_chips -= 1
+                game_state_chips[color_chosen_name] = game_state_chips[color_chosen_name] -1
             print("chip_actions: " + str(chip_actions))
         return Action(Action.take, chip_actions, None)
 
@@ -66,14 +65,72 @@ class CheapAgent:
     Implement an agent that purchases the cheapest card it can, then prioritizes cards of that color
     """
     is_ai = True
+    color_preference = ""
     def get_action(self, game_state):
-        # amt_chosen = randint(1, num_chips_to_choose) # amount randomly chosen
-            # num_chips_left_to_take = num_chips_to_choose - chips_taken
-            # for i in range(num_chips_left_to_take): # add gems to chip_actions
-            #     chip_actions.append(color_chosen_script) 
-            #     chips_taken += 1
-            #     board_num_chips -= 1
         player = game_state.players[game_state.player_to_move]
+
+        # Game state cards/chips/nobles
+        game_state_chips = game_state.gems.gems.copy()
+
+        # Search for cards you can afford, but have the cheapest chip cost
+        affordable_cards = []
+        for level, cards in enumerate(game_state.cards): # cards sets are ordered by their level
+            for card_index, card in enumerate(cards):    # looking at each card in this level
+                canAfford = True
+                cost = 0 # this is the total cost across all gem types for this card
+                for color, amt in card.price.items():    # looking at the card's cost per gem
+                    agent_amt = 0
+                    agent_amt += player.num_color_card(color) # add discount
+                    agent_amt += player.gems.gems[color]      # actual # chips of this color
+                    cost += amt
+                    if agent_amt < amt:
+                        canAfford = False
+                if canAfford: 
+                    # Here, we make the change. We want to keep track of all cards we can afford,
+                    # then take any one that has the least chip amount
+                    print("We can afford a card, so we should terminate somewhere here")
+                    affordable_cards.append([level, card_index, card, cost]) # we have tuples!
+                    return Action(Action.purchase, None, (level, card_index))
+                
+        is_empty = (len(affordable_cards) == 0)
+        if (not is_empty): # We now have a list of cards we can afford. Let's choose the cheapest one!
+            if (self.color_preference == ""): # we have no color preference set yet
+                cost_cards = [i[3] for i in affordable_cards]
+                min_cost = min(cost_cards)
+                # identify card in list with min cost
+                for tuple in affordable_cards: # tuple: [level, card_index, card, cost]
+                    if tuple[3] == min_cost: # we found our cheapest card
+                        level = tuple[0]
+                        card_index = tuple[1]
+                        self.color_preference = card.gem # set new color preference
+                        return Action(Action.purchase, None, (level, card_index))
+            else: # filter affordable cards by color preference, basically the same as the if loop
+                cost_cards = [i for i in affordable_cards if i[2].gem == self.color_preference]
+                min_cost = min(cost_cards)
+                # identify card in list with min cost
+                for tuple in affordable_cards:
+                    if tuple[3] == min_cost: # we found our cheapest card
+                        level = tuple[0]
+                        card_index = tuple[1]
+                        return Action(Action.purchase, None, (level, card_index))
+
+        # If no cards are affordable, choose random chips. Should this change to prioritize certain cards?
+        num_chips_to_choose = game_state.rules.max_gems_take
+        board_num_chips = 0
+        for i in game_state_chips.keys(): # add num. of chips per color
+            board_num_chips += game_state_chips[i]
+        gem_types = game_state_chips.keys() 
+        chips_taken = 0   
+        chip_actions = [] # the gems to take
+        while (chips_taken < num_chips_to_choose) and (board_num_chips != 0): # choose one rand. color at a time
+            color_chosen_name = sample(gem_types, 1)[0] # color randomly chosen
+            color_chosen_script = GEM_TO_SCRIPT_MAP[color_chosen_name]
+            if game_state_chips[color_chosen_name] != 0:
+                chip_actions.append(color_chosen_script) 
+                chips_taken += 1
+                board_num_chips -= 1
+                game_state_chips[color_chosen_name] = game_state_chips[color_chosen_name] -1
+        return Action(Action.take, chip_actions, None)
 
 class NobleAgent: 
     """
@@ -83,43 +140,12 @@ class NobleAgent:
     def get_action(self, game_state):
         player = game_state.players[game_state.player_to_move]
 
+
 class AverserialAgent:
     """"""
     is_ai = True
     def get_action(self, game_state):
         player = game_state.players[game_state.player_to_move]
-
-"""class CultivatorPlayer: # FOR REFERENCE
-    is_ai = True
-    def get_action(self, game_state: SplendorGameState):
-        player = game_state.players[game_state.player_to_move]
-        gold = player.gems.get(GOLD_GEM)
-
-        action_scores = []
-        
-        for level, cards in enumerate(game_state.cards):
-            for pos, card in enumerate(cards):
-                shortage = player.gems.shortage(card.price)
-                gold_shortage = shortage.count() - gold
-                if gold_shortage <= 0: # affordable card
-                    action = Action(Action.purchase, None, (level, pos))
-                    score = card.points
-                    action_scores.append((score, action))
-                else: 
-                    gems = list(shortage.gems.keys())
-
-                    if len(gems) > 3:
-                        gems = gems[:3]
-                    if len(gems) == 1 and shortage.get(gems[0]) > 1:
-                        gems = [gems[0], gems[0]]
-                    action = Action(Action.take, gems, None)
-                    score = -gold_shortage
-                    if card.points > 0 and gold_shortage < 3:
-                        score += card.points + 1
-                    action_scores.append((score, action))
-
-        _, best_action = sorted(action_scores, reverse=True, key = lambda x: x[0])[0]
-        return best_action"""
 
 def play_game():
     player_names = ['Human', 'AI Agent']
