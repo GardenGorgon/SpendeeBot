@@ -167,7 +167,8 @@ class SplendorPlayerState: #Players own the actions to change the boardstate now
             print("You can't afford this card, you are short by this many coins: " + str(shortage))
             return False
         
-        """This section actually does the purchasing"""        
+        """This section actually does the purchasing"""
+        chipsReturned = ChipStack() #We cannot alter the boards gem bank, so we will return this to do it later
         # if player can afford card, do actual payment
         discountedPrice = ChipStack() # Discounted price is the price after the discount from your gem cards
         discountedPriceDict = discountedPrice.gems
@@ -177,10 +178,11 @@ class SplendorPlayerState: #Players own the actions to change the boardstate now
             # print("gem: " + str(gem))
             # print("price: " + str(price))
             self.gems.alterChip(gem, -price)
+            chipsReturned.alterChip(gem, price)
             
         self.cards.alterChip(card.gem, 1) # add bought card to player's cards
         self.points += card.points             # add card reward for buying it
-        return True
+        return chipsReturned
     # We successfully bought the card
 
     def get_noble(self, nobles):
@@ -244,7 +246,7 @@ class Action:
         if action_type == Action.take: # If the action was take, we split everything after the t and those get put into the gems variable
             gems = [g for g in action_str[1:]] # I removed the split so that gems are separated in a list
         elif action_type == Action.purchase: 
-            print("I get here!")
+            #print("I get here!")
             pos = Action.scan_pos(action_str) 
         else:
             raise AttributeError('Invalid action type {} (in action {})'.format(action_type, action_str))
@@ -396,9 +398,13 @@ class SplendorGameState:
                 raise AttributeError('Invalid card position {}'.format(pos + 1))
 
             card = self.cards[level][pos]
-            if not player.purchase_card(card):
+            playerPurchaseReturnInfo = player.purchase_card(card) #This will store the return info from the players purchase attempt
+            if not playerPurchaseReturnInfo: #If it was false
                 raise AttributeError('Player can\'t afford card') # I told the player exactly how many they were missing, we can probably get rid of that
-            self.new_table_card(level, pos) # Replacing the card
+            else:#If it wasn't false, it returned a gem pile with all of the gems spent
+                for gem, price in playerPurchaseReturnInfo.gems.items(): #Returning the gems that were spent
+                    self.gems.alterChip(gem, price)
+                self.new_table_card(level, pos) # Replacing the card
             
 
         else: # The command was bad
