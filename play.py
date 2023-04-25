@@ -90,7 +90,7 @@ class CheapAgent:
                     # then take any one that has the least chip amount
                     print("We can afford a card, so we should terminate somewhere here")
                     affordable_cards.append([level, card_index, card, cost]) # we have tuples!
-                    return Action(Action.purchase, None, (level, card_index))
+                    # return Action(Action.purchase, None, (level, card_index))
                 
         is_empty = (len(affordable_cards) == 0)
         if (not is_empty): # We now have a list of cards we can afford. Let's choose the cheapest one!
