@@ -1,0 +1,417 @@
+turn:0 player:0
+nobles: [3|b3r0g0k3w3] [3|b0r4g4k0w0] [3|b0r0g0k4w4] 
+3: [green4|b7r0g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] [white4|b0r3g0k6w3] 
+2: [red2|b4r0g2k0w0] [black1|b2r0g2k0w3] [green1|b0r3g2k0w3] [green2|b5r0g3k0w0] 
+1: [green0|b0r3g0k0w0] [white0|b1r1g1k1w0] [black0|b2r1g1k0w1] [red0|b0r0g0k0w3] 
+gems:b7r7g7k7w7
+Human| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b0r0g0k0w0
+
+AI Agent| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b0r0g0k0w0
+
+
+Human move: trgb
+turn:0 player:1
+nobles: [3|b3r0g0k3w3] [3|b0r4g4k0w0] [3|b0r0g0k4w4] 
+3: [green4|b7r0g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] [white4|b0r3g0k6w3] 
+2: [red2|b4r0g2k0w0] [black1|b2r0g2k0w3] [green1|b0r3g2k0w3] [green2|b5r0g3k0w0] 
+1: [green0|b0r3g0k0w0] [white0|b1r1g1k1w0] [black0|b2r1g1k0w1] [red0|b0r0g0k0w3] 
+gems:b6r6g6k7w7
+Human| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b1r1g1k0w0
+
+AI Agent| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b0r0g0k0w0
+
+
+AI color preference: 
+affordable_cards: []
+/Users/stephaniemartinez/Downloads/CS4100/project/SpendeeBot/play.py:50: DeprecationWarning: Sampling from a set deprecated
+since Python 3.9 and will be removed in a subsequent version.
+  color_chosen_name = sample(game_state_chips.keys(), 1)[0]         # color randomly chosen
+AI Agent move: tbwg
+turn:1 player:0
+nobles: [3|b3r0g0k3w3] [3|b0r4g4k0w0] [3|b0r0g0k4w4] 
+3: [green4|b7r0g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] [white4|b0r3g0k6w3] 
+2: [red2|b4r0g2k0w0] [black1|b2r0g2k0w3] [green1|b0r3g2k0w3] [green2|b5r0g3k0w0] 
+1: [green0|b0r3g0k0w0] [white0|b1r1g1k1w0] [black0|b2r1g1k0w1] [red0|b0r0g0k0w3] 
+gems:b5r6g5k7w6
+Human| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b1r1g1k0w0
+
+AI Agent| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b1r0g1k0w1
+
+
+Human move: tggg
+turn:1 player:1
+nobles: [3|b3r0g0k3w3] [3|b0r4g4k0w0] [3|b0r0g0k4w4] 
+3: [green4|b7r0g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] [white4|b0r3g0k6w3] 
+2: [red2|b4r0g2k0w0] [black1|b2r0g2k0w3] [green1|b0r3g2k0w3] [green2|b5r0g3k0w0] 
+1: [green0|b0r3g0k0w0] [white0|b1r1g1k1w0] [black0|b2r1g1k0w1] [red0|b0r0g0k0w3] 
+gems:b5r6g2k7w6
+Human| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b1r1g4k0w0
+
+AI Agent| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b1r0g1k0w1
+
+
+AI color preference: 
+affordable_cards: []
+AI Agent move: twwg
+turn:2 player:0
+nobles: [3|b3r0g0k3w3] [3|b0r4g4k0w0] [3|b0r0g0k4w4] 
+3: [green4|b7r0g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] [white4|b0r3g0k6w3] 
+2: [red2|b4r0g2k0w0] [black1|b2r0g2k0w3] [green1|b0r3g2k0w3] [green2|b5r0g3k0w0] 
+1: [green0|b0r3g0k0w0] [white0|b1r1g1k1w0] [black0|b2r1g1k0w1] [red0|b0r0g0k0w3] 
+gems:b5r6g1k7w4
+Human| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b1r1g4k0w0
+
+AI Agent| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b1r0g2k0w3
+
+
+Human move: b11
+card to buy: [green0|b0r3g0k0w0]
+You can't afford this card, you are short by this many coins: b0r3g0k0w0
+Invalid action 0b0: Player can't afford card
+Human move: trrr
+turn:2 player:1
+nobles: [3|b3r0g0k3w3] [3|b0r4g4k0w0] [3|b0r0g0k4w4] 
+3: [green4|b7r0g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] [white4|b0r3g0k6w3] 
+2: [red2|b4r0g2k0w0] [black1|b2r0g2k0w3] [green1|b0r3g2k0w3] [green2|b5r0g3k0w0] 
+1: [green0|b0r3g0k0w0] [white0|b1r1g1k1w0] [black0|b2r1g1k0w1] [red0|b0r0g0k0w3] 
+gems:b5r3g1k7w4
+Human| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b1r4g4k0w0
+
+AI Agent| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b1r0g2k0w3
+
+
+AI color preference: 
+We can afford a card, but is it the preferred color?
+affordable_cards: [[0, 3, <game.Card object at 0x7fb0aab55550>, 3]]
+cost_cards: [3]
+min_cost: 3
+found min. card
+tuple[2].gem: red
+card to buy: [red0|b0r0g0k0w3]
+card_gem_price: 0
+player_gem_amt: 0
+card_gem_price: 0
+player_gem_amt: 0
+card_gem_price: 0
+player_gem_amt: 0
+card_gem_price: 0
+player_gem_amt: 0
+card_gem_price: 3
+player_gem_amt: 0
+gem: blue
+price: 0
+gem: red
+price: 0
+gem: green
+price: 0
+gem: black
+price: 0
+gem: white
+price: 3
+AI Agent move: 0b3
+turn:3 player:0
+nobles: [3|b3r0g0k3w3] [3|b0r4g4k0w0] [3|b0r0g0k4w4] 
+3: [green4|b7r0g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] [white4|b0r3g0k6w3] 
+2: [red2|b4r0g2k0w0] [black1|b2r0g2k0w3] [green1|b0r3g2k0w3] [green2|b5r0g3k0w0] 
+1: [green0|b0r3g0k0w0] [white0|b1r1g1k1w0] [black0|b2r1g1k0w1] [white0|b1r0g0k1w3] 
+gems:b5r3g1k7w7
+Human| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b1r4g4k0w0
+
+AI Agent| points: 0
+cards:
+b0r1g0k0w0
+gems:
+b1r0g2k0w0
+
+
+Human move: b11
+card to buy: [green0|b0r3g0k0w0]
+card_gem_price: 0
+player_gem_amt: 0
+card_gem_price: 3
+player_gem_amt: 0
+card_gem_price: 0
+player_gem_amt: 0
+card_gem_price: 0
+player_gem_amt: 0
+card_gem_price: 0
+player_gem_amt: 0
+gem: blue
+price: 0
+gem: red
+price: 3
+gem: green
+price: 0
+gem: black
+price: 0
+gem: white
+price: 0
+turn:3 player:1
+nobles: [3|b3r0g0k3w3] [3|b0r4g4k0w0] [3|b0r0g0k4w4] 
+3: [green4|b7r0g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] [white4|b0r3g0k6w3] 
+2: [red2|b4r0g2k0w0] [black1|b2r0g2k0w3] [green1|b0r3g2k0w3] [green2|b5r0g3k0w0] 
+1: [red0|b2r0g1k0w0] [white0|b1r1g1k1w0] [black0|b2r1g1k0w1] [white0|b1r0g0k1w3] 
+gems:b5r6g1k7w7
+Human| points: 0
+cards:
+b0r0g1k0w0
+gems:
+b1r1g4k0w0
+
+AI Agent| points: 0
+cards:
+b0r1g0k0w0
+gems:
+b1r0g2k0w0
+
+
+AI color preference: red
+affordable_cards: []
+AI Agent move: tgkr
+turn:4 player:0
+nobles: [3|b3r0g0k3w3] [3|b0r4g4k0w0] [3|b0r0g0k4w4] 
+3: [green4|b7r0g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] [white4|b0r3g0k6w3] 
+2: [red2|b4r0g2k0w0] [black1|b2r0g2k0w3] [green1|b0r3g2k0w3] [green2|b5r0g3k0w0] 
+1: [red0|b2r0g1k0w0] [white0|b1r1g1k1w0] [black0|b2r1g1k0w1] [white0|b1r0g0k1w3] 
+gems:b5r5g0k6w7
+Human| points: 0
+cards:
+b0r0g1k0w0
+gems:
+b1r1g4k0w0
+
+AI Agent| points: 0
+cards:
+b0r1g0k0w0
+gems:
+b1r1g3k1w0
+
+
+Human move: twww
+turn:4 player:1
+nobles: [3|b3r0g0k3w3] [3|b0r4g4k0w0] [3|b0r0g0k4w4] 
+3: [green4|b7r0g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] [white4|b0r3g0k6w3] 
+2: [red2|b4r0g2k0w0] [black1|b2r0g2k0w3] [green1|b0r3g2k0w3] [green2|b5r0g3k0w0] 
+1: [red0|b2r0g1k0w0] [white0|b1r1g1k1w0] [black0|b2r1g1k0w1] [white0|b1r0g0k1w3] 
+gems:b5r5g0k6w4
+Human| points: 0
+cards:
+b0r0g1k0w0
+gems:
+b1r1g4k0w3
+
+AI Agent| points: 0
+cards:
+b0r1g0k0w0
+gems:
+b1r1g3k1w0
+
+
+AI color preference: red
+We can afford a card, but is it the preferred color?
+affordable_cards: [[0, 1, <game.Card object at 0x7fb0aab53820>, 3]]
+AI Agent move: twrw
+turn:5 player:0
+nobles: [3|b3r0g0k3w3] [3|b0r4g4k0w0] [3|b0r0g0k4w4] 
+3: [green4|b7r0g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] [white4|b0r3g0k6w3] 
+2: [red2|b4r0g2k0w0] [black1|b2r0g2k0w3] [green1|b0r3g2k0w3] [green2|b5r0g3k0w0] 
+1: [red0|b2r0g1k0w0] [white0|b1r1g1k1w0] [black0|b2r1g1k0w1] [white0|b1r0g0k1w3] 
+gems:b5r4g0k6w2
+Human| points: 0
+cards:
+b0r0g1k0w0
+gems:
+b1r1g4k0w3
+
+AI Agent| points: 0
+cards:
+b0r1g0k0w0
+gems:
+b1r2g3k1w2
+
+
+Human move: tkkb
+turn:5 player:1
+nobles: [3|b3r0g0k3w3] [3|b0r4g4k0w0] [3|b0r0g0k4w4] 
+3: [green4|b7r0g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] [white4|b0r3g0k6w3] 
+2: [red2|b4r0g2k0w0] [black1|b2r0g2k0w3] [green1|b0r3g2k0w3] [green2|b5r0g3k0w0] 
+1: [red0|b2r0g1k0w0] [white0|b1r1g1k1w0] [black0|b2r1g1k0w1] [white0|b1r0g0k1w3] 
+gems:b4r4g0k4w2
+Human| points: 0
+cards:
+b0r0g1k0w0
+gems:
+b2r1g4k2w3
+
+AI Agent| points: 0
+cards:
+b0r1g0k0w0
+gems:
+b1r2g3k1w2
+
+
+AI color preference: red
+We can afford a card, but is it the preferred color?
+affordable_cards: [[0, 1, <game.Card object at 0x7fb0aab53820>, 3]]
+AI Agent move: twbr
+turn:6 player:0
+nobles: [3|b3r0g0k3w3] [3|b0r4g4k0w0] [3|b0r0g0k4w4] 
+3: [green4|b7r0g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] [white4|b0r3g0k6w3] 
+2: [red2|b4r0g2k0w0] [black1|b2r0g2k0w3] [green1|b0r3g2k0w3] [green2|b5r0g3k0w0] 
+1: [red0|b2r0g1k0w0] [white0|b1r1g1k1w0] [black0|b2r1g1k0w1] [white0|b1r0g0k1w3] 
+gems:b3r3g0k4w1
+Human| points: 0
+cards:
+b0r0g1k0w0
+gems:
+b2r1g4k2w3
+
+AI Agent| points: 0
+cards:
+b0r1g0k0w0
+gems:
+b2r3g3k1w3
+
+
+Human move: b14
+card to buy: [white0|b1r0g0k1w3]
+card_gem_price: 1
+player_gem_amt: 0
+card_gem_price: 0
+player_gem_amt: 0
+card_gem_price: 0
+player_gem_amt: 1
+card_gem_price: 1
+player_gem_amt: 0
+card_gem_price: 3
+player_gem_amt: 0
+gem: blue
+price: 1
+gem: red
+price: 0
+gem: green
+price: -1
+gem: black
+price: 1
+gem: white
+price: 3
+turn:6 player:1
+nobles: [3|b3r0g0k3w3] [3|b0r4g4k0w0] [3|b0r0g0k4w4] 
+3: [green4|b7r0g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] [white4|b0r3g0k6w3] 
+2: [red2|b4r0g2k0w0] [black1|b2r0g2k0w3] [green1|b0r3g2k0w3] [green2|b5r0g3k0w0] 
+1: [red0|b2r0g1k0w0] [white0|b1r1g1k1w0] [black0|b2r1g1k0w1] [blue1|b0r4g0k0w0] 
+gems:b4r3g0k5w4
+Human| points: 0
+cards:
+b0r0g1k0w1
+gems:
+b1r1g4k1w0
+
+AI Agent| points: 0
+cards:
+b0r1g0k0w0
+gems:
+b2r3g3k1w3
+
+
+AI color preference: red
+We can afford a card, but is it the preferred color?
+We can afford a card, but is it the preferred color?
+We can afford a card, but is it the preferred color?
+We can afford a card, but is it the preferred color?
+We can afford a card, but is it the preferred color?
+We can afford a card, but is it the preferred color?
+affordable_cards: [[0, 0, <game.Card object at 0x7fb0aab55790>, 2], [0, 1, <game.Card object at 0x7fb0aab53820>, 3], [0, 2, <game.Card object at 0x7fb0aab53ee0>, 4], [0, 3, <game.Card object at 0x7fb0aab55850>, 3], [1, 1, <game.Card object at 0x7fb0aaa773d0>, 6], [1, 2, <game.Card object at 0x7fb0aaa47640>, 7]]
+cost_cards: [2]
+min_cost: 2
+card to buy: [red0|b2r0g1k0w0]
+card_gem_price: 2
+player_gem_amt: 0
+card_gem_price: 0
+player_gem_amt: 1
+card_gem_price: 1
+player_gem_amt: 0
+card_gem_price: 0
+player_gem_amt: 0
+card_gem_price: 0
+player_gem_amt: 0
+gem: blue
+price: 2
+gem: red
+price: -1
+gem: green
+price: 1
+gem: black
+price: 0
+gem: white
+price: 0
+AI Agent move: 0b0
+turn:7 player:0
+nobles: [3|b3r0g0k3w3] [3|b0r4g4k0w0] [3|b0r0g0k4w4] 
+3: [green4|b7r0g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] [white4|b0r3g0k6w3] 
+2: [red2|b4r0g2k0w0] [black1|b2r0g2k0w3] [green1|b0r3g2k0w3] [green2|b5r0g3k0w0] 
+1: [red1|b0r0g0k0w4] [white0|b1r1g1k1w0] [black0|b2r1g1k0w1] [blue1|b0r4g0k0w0] 
+gems:b6r3g1k5w4
+Human| points: 0
+cards:
+b0r0g1k0w1
+gems:
+b1r1g4k1w0
+
+AI Agent| points: 0
+cards:
+b0r2g0k0w0
+gems:
+b0r3g2k1w3

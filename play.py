@@ -23,12 +23,8 @@ class BasicAgent:
     def get_action(self, game_state):
         player = game_state.players[game_state.player_to_move]
 
-        # Game state cards/chips/nobles
-        game_state_chips = game_state.gems.gems.copy()
-
         # First, look if it can afford any card
         for level, cards in enumerate(game_state.cards): # cards sets are ordered by their level
-            print("Level: " + str(level)) 
             for card_index, card in enumerate(cards):    # looking at each card in this level
                 canAfford = True
                 for color, amt in card.price.items():    # looking at the card's cost per gem
@@ -40,25 +36,24 @@ class BasicAgent:
                 if canAfford: # Buy it
                     return Action(Action.purchase, None, (level, card_index))
 
-        # If no cards are affordable, choose random chips
-        num_chips_to_choose = game_state.rules.max_gems_take
-        board_num_chips = 0
-        for i in game_state_chips.keys(): # add num. of chips per color
-            board_num_chips += game_state_chips[i]
-        gem_types = game_state_chips.keys() 
-        chips_taken = 0   
-        chip_actions = [] # the gems to take
-        while (chips_taken < num_chips_to_choose) and (board_num_chips != 0): # choose one rand. color at a time
-            color_chosen_name = sample(gem_types, 1)[0]              # color randomly chosen
-            color_chosen_script = GEM_TO_SCRIPT_MAP[color_chosen_name]
-            print("color_chosen: " + str(color_chosen_name))
-            if game_state_chips[color_chosen_name] != 0:
-                chip_actions.append(color_chosen_script) 
-                chips_taken += 1
-                board_num_chips -= 1
-                game_state_chips[color_chosen_name] = game_state_chips[color_chosen_name] - 1
-            print("chip_actions: " + str(chip_actions))
+        chip_actions = rand_choose_cards(game_state) # If no cards are affordable, choose random chips
         return Action(Action.take, chip_actions, None)
+
+def rand_choose_cards(game_state): # randomly chooses chips based off what's left on the board
+    num_chips_to_choose = game_state.rules.max_gems_take
+    game_state_chips = game_state.gems.gems.copy() # make a dict to not mutate game_state yet, Action will do this for us
+    board_num_chips = 0
+    board_num_chips = sum([game_state_chips[i] for i in game_state_chips.keys()]) # add num. of chips per color
+    chips_taken = 0   
+    chip_actions = [] # the gems to take
+    while (chips_taken < num_chips_to_choose) and (board_num_chips != 0): # choose one rand. color at a time
+        color_chosen_name = sample(game_state_chips.keys(), 1)[0]         # color randomly chosen
+        if game_state_chips[color_chosen_name] != 0:
+            chip_actions.append(GEM_TO_SCRIPT_MAP[color_chosen_name])     # add to action list
+            chips_taken += 1
+            board_num_chips -= 1
+            game_state_chips[color_chosen_name] = game_state_chips[color_chosen_name] - 1
+    return chip_actions
 
 class CheapAgent:  
     """
@@ -69,8 +64,6 @@ class CheapAgent:
     def get_action(self, game_state):
         player = game_state.players[game_state.player_to_move]
         print("AI color preference: " + self.color_preference)
-        # Game state cards/chips/nobles
-        game_state_chips = game_state.gems.gems.copy()
 
         # Search for cards you can afford, but have the cheapest chip cost
         affordable_cards = []
@@ -85,10 +78,8 @@ class CheapAgent:
                     cost += amt - player.num_color_card(color)
                     if agent_amt < amt: # can we buy?
                         canAfford = False
-                if canAfford: 
-                    # Here, we make the change. We want to keep track of all cards we can afford,
-                    # then take any one that has the least chip amount
-                    print("We can afford a card, so we should terminate somewhere here")
+                if canAfford: # Here, we make the change. We want to keep track of all cards we can afford
+                    print("We can afford a card, but is it the preferred color?")
                     affordable_cards.append([level, card_index, card, cost]) # we have tuples!
                 
         print("affordable_cards: " + str(affordable_cards))
@@ -106,7 +97,6 @@ class CheapAgent:
                         card_index = tuple[1]
                         print("tuple[2].gem: " + str(tuple[2].gem))
                         self.color_preference = tuple[2].gem
-                        # TODO: something is amiss here, the card the AI buys and color preference are different
                         return Action(Action.purchase, None, (level, card_index))
             else: # filter affordable cards by color preference, basically the same as the if loop
                 cost_cards = [i[3] for i in affordable_cards if i[2].gem == self.color_preference]
@@ -114,30 +104,23 @@ class CheapAgent:
                     print("cost_cards: " + str(cost_cards))
                     min_cost = min(cost_cards)
                     print("min_cost: " + str(min_cost))
-                    # identify card in list with min cost
-                    for tuple in affordable_cards:
+                    for tuple in affordable_cards: # identify card in list with min cost
                         if tuple[3] == min_cost: # we found our cheapest card
                             level = tuple[0]
                             card_index = tuple[1]
                             return Action(Action.purchase, None, (level, card_index))
 
-        # If no cards are affordable, choose random chips. Should this change to prioritize certain cards?
-        num_chips_to_choose = game_state.rules.max_gems_take
-        board_num_chips = 0
-        for i in game_state_chips.keys(): # add num. of chips per color
-            board_num_chips += game_state_chips[i]
-        gem_types = game_state_chips.keys() 
-        chips_taken = 0   
-        chip_actions = [] # the gems to take
-        while (chips_taken < num_chips_to_choose) and (board_num_chips != 0): # choose one rand. color at a time
-            color_chosen_name = sample(gem_types, 1)[0] # color randomly chosen
-            color_chosen_script = GEM_TO_SCRIPT_MAP[color_chosen_name]
-            if game_state_chips[color_chosen_name] != 0:
-                chip_actions.append(color_chosen_script) 
-                chips_taken += 1
-                board_num_chips -= 1
-                game_state_chips[color_chosen_name] = game_state_chips[color_chosen_name] -1
+        # TODO: Should this change to prioritize certain cards? 
+        chip_actions = rand_choose_cards(game_state) # If no cards are affordable, choose random chips.
         return Action(Action.take, chip_actions, None)
+
+def chip_colors_given_cards(cards, game_state):
+    """ Steph: This outputs a set of gem names that are required by the given set of cards. 
+     Designed for CheapAgent. A TODO for later..."""
+    # Make list of colors in set 
+    # Randomly choose a set of colors 
+    # if there are no chips of that color, remove it 
+    # if there are no chips of the rest of the colors, choose from the colors left
 
 class NobleAgent: 
     """
@@ -158,7 +141,7 @@ class AverserialAgent:
 
 def play_game():
     player_names = ['Human', 'AI Agent']
-    players = [HumanPlayer(), CheapAgent()]
+    players = [HumanPlayer(), BasicAgent()]
     rules = SplendorGameRules()
     game = SplendorGameState(player_names, rules)
 

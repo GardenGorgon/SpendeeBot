@@ -282,7 +282,7 @@ class SplendorGameRules:
     def __init__(self):
         self.num_players = 2
         self.max_open_cards = 4 # open cards on table
-        self.win_points = 3 # changing this to 3 for testing...
+        self.win_points = 2 # changing this to 3 for testing...
         self.max_player_gems = 10
         self.max_nobles = self.num_players + 1
         self.max_gems_take = 3 # max gems to take
@@ -441,7 +441,7 @@ class SplendorGameState:
 
     def best_player(self):
         '''Returns name of best player'''
-        scores = [(player.score, player.name) for player in self.players]
+        scores = [(player.points, player.name) for player in self.players]
         return sorted(scores, reverse=True)[0]
         
     # -*- coding: utf-8 -*-
