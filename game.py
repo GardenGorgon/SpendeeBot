@@ -152,7 +152,6 @@ class SplendorPlayerState: #Players own the actions to change the boardstate now
         """TODO: there may be an error when the player purchases a card using both
         their chips and the card chips..."""
         # Creating the purchasing power total
-        print('card to buy: ' + str(card))
         purchasingPower = ChipStack()
         purchasingPowerDict = purchasingPower.gems
         for key in purchasingPowerDict.keys():
@@ -178,23 +177,16 @@ class SplendorPlayerState: #Players own the actions to change the boardstate now
         discountedPriceDict = discountedPrice.gems
         for key in discountedPriceDict.keys():
             card_gem_price = card.price.gems[key]
-            print('card_gem_price: ' + str(card_gem_price))
             player_gem_amt = self.num_color_card(key)
-            print('player_gem_amt: ' + str(player_gem_amt))
             card_cost_gem_diff = card_gem_price - player_gem_amt
             discountedPrice.gems[key] = card_cost_gem_diff # this could return a negative
         for gem, price in discountedPrice.gems.items(): # Spending the players gem chips
-            # TODO: Error here? alterChip throws error
             if price > 0:
-                print("gem: " + str(gem))
-                print("price: " + str(price))
+                # print("gem: " + str(gem))
+                # print("price: " + str(price))
                 self.gems.alterChip(gem, -price)
                 chipsReturned.alterChip(gem, price)
-            else: # if we can fully pay off the cost with card gems, we don't do anything I think 
-                print("gem: " + str(gem))
-                print("price: " + str(price))
-                # self.gems.alterChip(gem, -price)    # we are no longer doing this!
-                # chipsReturned.alterChip(gem, price) # I guess we don't do anything here?               
+                # else: # if we can fully pay off the cost with card gems, we don't do anything I think              
             
         self.cards.alterChip(card.gem, 1) # add bought card to player's cards
         self.points += card.points # add card reward for buying it

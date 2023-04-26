@@ -24,7 +24,8 @@ class BasicAgent:
         player = game_state.players[game_state.player_to_move]
 
         # First, look if it can afford any card
-        for level, cards in enumerate(game_state.cards): # cards sets are ordered by their level
+        for level, cards in reversed(list(enumerate(game_state.cards))): # cards sets are ordered by their level
+            # print("level: " + str(level))
             for card_index, card in enumerate(cards):    # looking at each card in this level
                 canAfford = True
                 for color, amt in card.price.items():    # looking at the card's cost per gem
@@ -63,11 +64,12 @@ class CheapAgent:
     color_preference = ""
     def get_action(self, game_state):
         player = game_state.players[game_state.player_to_move]
-        print("AI color preference: " + self.color_preference)
+        # print("AI color preference: " + self.color_preference)
 
         # Search for cards you can afford, but have the cheapest chip cost
         affordable_cards = []
-        for level, cards in enumerate(game_state.cards): # cards sets are ordered by their level
+        init_level = 2
+        for level, cards in reversed(list(enumerate(game_state.cards))): # cards sets are ordered by their level
             for card_index, card in enumerate(cards):    # looking at each card in this level
                 canAfford = True
                 cost = 0 # this is the total cost across all gem types for this card
@@ -79,31 +81,31 @@ class CheapAgent:
                     if agent_amt < amt: # can we buy?
                         canAfford = False
                 if canAfford: # Here, we make the change. We want to keep track of all cards we can afford
-                    print("We can afford a card, but is it the preferred color?")
+                    # print("We can afford a card, but is it the preferred color?")
                     affordable_cards.append([level, card_index, card, cost]) # we have tuples!
                 
-        print("affordable_cards: " + str(affordable_cards))
+        # print("affordable_cards: " + str(affordable_cards))
         is_empty = (len(affordable_cards) == 0)
         if (not is_empty): # We now have a list of cards we can afford. Let's choose the cheapest one!
             if (self.color_preference == ""): # we have no color preference set yet
                 cost_cards = [i[3] for i in affordable_cards]
-                print("cost_cards: " + str(cost_cards))
+                # print("cost_cards: " + str(cost_cards))
                 min_cost = min(cost_cards)     # identify card in list with min cost
-                print("min_cost: " + str(min_cost))
+                # print("min_cost: " + str(min_cost))
                 for tuple in affordable_cards: # tuple: [level, card_index, card, cost]
                     if tuple[3] == min_cost:   # we found our cheapest card
-                        print("found min. card")
+                        # print("found min. card")
                         level = tuple[0]
                         card_index = tuple[1]
-                        print("tuple[2].gem: " + str(tuple[2].gem))
+                        # print("tuple[2].gem: " + str(tuple[2].gem))
                         self.color_preference = tuple[2].gem
                         return Action(Action.purchase, None, (level, card_index))
             else: # filter affordable cards by color preference, basically the same as the if loop
                 cost_cards = [i[3] for i in affordable_cards if i[2].gem == self.color_preference]
                 if (len(cost_cards) > 0): # make sure we have cards to choose from
-                    print("cost_cards: " + str(cost_cards))
+                    # print("cost_cards: " + str(cost_cards))
                     min_cost = min(cost_cards)
-                    print("min_cost: " + str(min_cost))
+                    # print("min_cost: " + str(min_cost))
                     for tuple in affordable_cards: # identify card in list with min cost
                         if tuple[3] == min_cost: # we found our cheapest card
                             level = tuple[0]
@@ -140,8 +142,8 @@ class AverserialAgent:
         player = game_state.players[game_state.player_to_move]
 
 def play_game():
-    player_names = ['Human', 'AI Agent']
-    players = [HumanPlayer(), BasicAgent()]
+    player_names = ['AI Agent 1', 'AI Agent 2']
+    players = [CheapAgent(), CheapAgent()]
     rules = SplendorGameRules()
     game = SplendorGameState(player_names, rules)
 
