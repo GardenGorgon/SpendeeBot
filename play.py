@@ -109,10 +109,11 @@ class CheapAgent:
                         # TODO: something is amiss here, the card the AI buys and color preference are different
                         return Action(Action.purchase, None, (level, card_index))
             else: # filter affordable cards by color preference, basically the same as the if loop
-                cost_cards = [i for i in affordable_cards if i[2].gem == self.color_preference]
+                cost_cards = [i[3] for i in affordable_cards if i[2].gem == self.color_preference]
                 if (len(cost_cards) > 0): # make sure we have cards to choose from
                     print("cost_cards: " + str(cost_cards))
                     min_cost = min(cost_cards)
+                    print("min_cost: " + str(min_cost))
                     # identify card in list with min cost
                     for tuple in affordable_cards:
                         if tuple[3] == min_cost: # we found our cheapest card
