@@ -1,0 +1,25 @@
+
+Given the current state of the player, calculate percentage that the player is able to purchase a card for every card in the shop.  When it finds the one with the biggest point to potential ratio, buy it, otherwise take coins corresponding to that card.
+
+tunnel vision on a highpoint card (the tingwei method)/monopoly method given what 3* are available on the board. (calculate percentage of usefulness of each card to those highrank cards). Hoarding chips of certain colors.
+
+cards that it wants to buy most - coin it wants not available
+stall - how likely is it that the player will buy something next turn?
+buy the card of the color it needs - 
+
+can we make an AI that takes the unknown knowledge to player?
+
+given what coins are available and color of cards at the given 
+total gem cost to point ratio
+
+give each card an purchasable rating?
+- number of cards
+
+
+given a list of cards we want to priorize (not in order): how do we put it in order?
+Vary from agent to agent.....do we want an interface? (Agent.py)
+- most purchasable given current cards + tokens
+- highest point value
+- best cost/point ratio
+
+FIGURE OUT A WAY TO EASILY switch agents?
