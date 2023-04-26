@@ -48,7 +48,7 @@ class ChipStack: #This class reperesents a stack of chips
         return self.gems.keys()
 
     def total_items_amt(self):
-        return sum(self.gems.items())
+        return sum(self.gems.values())
     
     def __str__(self):
         s = ''
@@ -205,12 +205,12 @@ class SplendorPlayerState: #Players own the actions to change the boardstate now
             if can_afford:
                 noble_list.append(n)
         
-        if noble_list:
-            n = randint(1, len(noble_list))# choose random if more than one available
-            noble = nobles.pop(noble_list[n])
-            self.points += noble.points
-            #We just pop the noble from the available noble list, and add its points to the player
-    
+        for noble in reversed(noble_list):
+            print("Noble removed: " + str(noble)) 
+            popped_noble = nobles.pop(noble)
+            self.points += popped_noble.points
+
+        
     def num_color_card(self, gem):
         """ informs you how many cards of the given gem this player has"""
         return self.cards.gems[gem]
@@ -274,8 +274,8 @@ class SplendorGameRules:
     def __init__(self):
         self.num_players = 2
         self.max_open_cards = 4 # open cards on table
-        self.win_points = 2 # changing this to 3 for testing...
-        self.max_player_gems = 10
+        self.win_points = 15 # changing this to 3 for testing...
+        self.max_player_gems = 10 # be back in a min!!! 
         self.max_nobles = self.num_players + 1
         self.max_gems_take = 3 # max gems to take
         self.max_gems = 7
@@ -336,6 +336,8 @@ class SplendorGameState:
         new_card = None
         if self.decks[level]:
             new_card = self.decks[level].pop()
+        if new_card == None:
+            return
         self.cards[level][pos] = new_card
 
     def action(self, action):
