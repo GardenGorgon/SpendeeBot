@@ -46,6 +46,9 @@ class ChipStack: #This class reperesents a stack of chips
     
     def keys(self):
         return self.gems.keys()
+
+    def total_items_amt(self):
+        return sum(self.gems.items())
     
     def __str__(self):
         s = ''
@@ -146,8 +149,10 @@ class SplendorPlayerState: #Players own the actions to change the boardstate now
     def purchase_card(self, card):
         '''Does card purchase. Returns false if player can't afford card'''
         """This section checks if the player can afford the card"""
+        """TODO: there may be an error when the player purchases a card using both
+        their chips and the card chips..."""
         # Creating the purchasing power total
-        #print('card: ' + str(card))
+        print('card to buy: ' + str(card))
         purchasingPower = ChipStack()
         purchasingPowerDict = purchasingPower.gems
         for key in purchasingPowerDict.keys():
@@ -160,7 +165,6 @@ class SplendorPlayerState: #Players own the actions to change the boardstate now
         for color, amt in card.price.items(): # Price is stored in the chipstack object so we call items on the price
             diff = amt - purchasingPower.gems[color]
             if diff > 0:
-                #print("Here")
                 shortage.alterChip(color, amt)
                 wasShort = True
         if wasShort == True:
@@ -168,20 +172,32 @@ class SplendorPlayerState: #Players own the actions to change the boardstate now
             return False
         
         """This section actually does the purchasing"""
-        chipsReturned = ChipStack() #We cannot alter the boards gem bank, so we will return this to do it later
+        chipsReturned = ChipStack() # We cannot alter the boards gem bank, so we will return this to do it later
         # if player can afford card, do actual payment
         discountedPrice = ChipStack() # Discounted price is the price after the discount from your gem cards
         discountedPriceDict = discountedPrice.gems
         for key in discountedPriceDict.keys():
-            discountedPrice.gems[key] = card.price.gems[key] - self.cards.gems[key]
+            card_gem_price = card.price.gems[key]
+            print('card_gem_price: ' + str(card_gem_price))
+            player_gem_amt = self.num_color_card(key)
+            print('player_gem_amt: ' + str(player_gem_amt))
+            card_cost_gem_diff = card_gem_price - player_gem_amt
+            discountedPrice.gems[key] = card_cost_gem_diff # this could return a negative
         for gem, price in discountedPrice.gems.items(): # Spending the players gem chips
-            # print("gem: " + str(gem))
-            # print("price: " + str(price))
-            self.gems.alterChip(gem, -price)
-            chipsReturned.alterChip(gem, price)
+            # TODO: Error here? alterChip throws error
+            if price > 0:
+                print("gem: " + str(gem))
+                print("price: " + str(price))
+                self.gems.alterChip(gem, -price)
+                chipsReturned.alterChip(gem, price)
+            else: # if we can fully pay off the cost with card gems, we don't do anything I think 
+                print("gem: " + str(gem))
+                print("price: " + str(price))
+                # self.gems.alterChip(gem, -price)    # we are no longer doing this!
+                # chipsReturned.alterChip(gem, price) # I guess we don't do anything here?               
             
         self.cards.alterChip(card.gem, 1) # add bought card to player's cards
-        self.points += card.points             # add card reward for buying it
+        self.points += card.points # add card reward for buying it
         return chipsReturned
     # We successfully bought the card
 
@@ -266,7 +282,7 @@ class SplendorGameRules:
     def __init__(self):
         self.num_players = 2
         self.max_open_cards = 4 # open cards on table
-        self.win_points = 15
+        self.win_points = 3 # changing this to 3 for testing...
         self.max_player_gems = 10
         self.max_nobles = self.num_players + 1
         self.max_gems_take = 3 # max gems to take
@@ -345,9 +361,11 @@ class SplendorGameState:
             player_chips = player.gems.gems # gets kind weird here but chipstack has a dict called gems
             for key in player_chips.keys():
                 playerGemCount += player_chips[key]
-                
+
+            #If the player has too many gems already    
             if playerGemCount >= self.rules.max_player_gems: # To prevent softlock, we are randomly removing players chips if they get too greedy
                 print("You already have the max number of gems! Now I'm going to take some away at random! Bwa ha ha ha!") # evil
+                removed_gems_str = ""
                 for i in range(3):
                     punishmentPiles = []
                     player_chipstack_dict = player.gems.gems
@@ -355,53 +373,53 @@ class SplendorGameState:
                         if player.gems.gems[key] > 0:
                             punishmentPiles.append(key)
                     punishment = choice(punishmentPiles)
+                    removed_gems_str += GEM_TO_SCRIPT_MAP[punishment] 
                     player.gems.alterChip(punishment, -1) # remove chip from player
                     self.gems.alterChip(punishment, 1) # wait, should this be +1 if we are grabbing from the player?
-                    #self.gems is the banks collection of gems
-                return #The greedy player loses their turn
+                    # self.gems is the banks collection of gems
+                print("Removed these gems: " + removed_gems_str)
+
+            # If the player doesn't have too many gems        
+            else: 
+                """
+                Just some leftovers we may or may not need. Might as well comment them.
                 
-            """
-            Just some leftovers we may or may not need. Might as well comment them.
-            
-            if len(gems) > self.rules.max_gems_take:
-                raise AttributeError('Can\'t take more than {} gems'.format(self.rules.max_gems_take))
-            
+                if len(gems) > self.rules.max_gems_take:
+                    raise AttributeError('Can\'t take more than {} gems'.format(self.rules.max_gems_take))
+                
+                if player.gem_count + len(gems) > self.rules.max_player_gems:
+                    raise AttributeError('Player can\'t have more than {} gems'.format(self.rules.max_player_gems))
+                """
+                
+                # This part actually takes gems from the table
+                self_chipstack = self.gems
+                for gem in gems:
+                    script_to_gem = ""
+                    try:
+                        script_to_gem = SCRIPT_TO_GEM_MAP[gem]  
+                    except Exception:
+                        raise AttributeError('Invalid gem given {}'.format(str(gem)))
 
-            if player.gem_count + len(gems) > self.rules.max_player_gems:
-                raise AttributeError('Player can\'t have more than {} gems'.format(self.rules.max_player_gems))
-            """
-            # This part actually takes gems from the table
-            self_chipstack = self.gems
-            for gem in gems:
-                script_to_gem = ""
-                try:
-                    script_to_gem = SCRIPT_TO_GEM_MAP[gem]  
-                except Exception:
-                    raise AttributeError('Invalid gem given {}'.format(str(gem)))
+                    if gem not in GEMS:
+                        raise AttributeError('Invalid gem {}'.format(gem))
+                    if self_chipstack.gems[script_to_gem] == 0:
+                        raise AttributeError('Not enough {} gems on table'.format(gem))
+                    player.gems.alterChip(script_to_gem, 1) # add to player
+                    self.gems.alterChip(script_to_gem, -1)  # remove from table 
 
-                if gem not in GEMS:
-                    raise AttributeError('Invalid gem {}'.format(gem))
-                if self_chipstack.gems[script_to_gem] == 0:
-                    raise AttributeError('Not enough {} gems on table'.format(gem))
-                player.gems.alterChip(script_to_gem, 1) # add to player
-                self.gems.alterChip(script_to_gem, -1)  # remove from table 
-
-            
 
         elif action.type == Action.purchase: 
             level, pos = action.pos 
-            #print("Level: " + str(level))
-            #print("pos " + str(pos))
             if level < 0 or level >= CARD_LEVELS:
                 raise AttributeError('Invalid deck level {}'.format(level + 1))
             if pos < 0 or pos >= self.rules.max_open_cards:
                 raise AttributeError('Invalid card position {}'.format(pos + 1))
 
             card = self.cards[level][pos]
-            playerPurchaseReturnInfo = player.purchase_card(card) #This will store the return info from the players purchase attempt
-            if not playerPurchaseReturnInfo: #If it was false
+            playerPurchaseReturnInfo = player.purchase_card(card) # This will store the return info from the players purchase attempt
+            if not playerPurchaseReturnInfo: # If it was false
                 raise AttributeError('Player can\'t afford card') # I told the player exactly how many they were missing, we can probably get rid of that
-            else:#If it wasn't false, it returned a gem pile with all of the gems spent
+            else: # If it wasn't false, it returned a gem pile with all of the gems spent
                 for gem, price in playerPurchaseReturnInfo.gems.items(): #Returning the gems that were spent
                     self.gems.alterChip(gem, price)
                 self.new_table_card(level, pos) # Replacing the card
@@ -427,4 +445,3 @@ class SplendorGameState:
         return sorted(scores, reverse=True)[0]
         
     # -*- coding: utf-8 -*-
-
