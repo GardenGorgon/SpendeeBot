@@ -288,6 +288,7 @@ class SplendorGameState:
         self.rules = rules #Holds onto all the numbers we reference later
         self.num_moves = 0 #Turn counter
         self.player_to_move = 0 #The next player to go, 0 is player one
+        self.pass_counter = 0 #how many turns in a row have the players 'passed' aka took nothing
 
         # init nobles
         self.nobles = sample(NOBLES, self.rules.max_nobles) # Random sampling our nobles to make em
@@ -346,6 +347,11 @@ class SplendorGameState:
         if action.type == Action.take: 
             #print("Action: t")
             gems = action.gems
+            if (len(gems)==0): #if the player is using take action but not taking coins, it counts as a 'pass'
+                self.pass_counter += 1
+            else:
+                self.pass_counter = 0
+            
             #print("gems: " + str(gems))
             
             """This section is for preventing softlock.
