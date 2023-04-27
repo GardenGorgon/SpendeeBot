@@ -500,7 +500,7 @@ def rand_choose_cards(game_state): # randomly chooses chips based off what's lef
     chips_taken = 0   
     chip_actions = [] # the gems to take
     while (chips_taken < num_chips_to_choose) and (board_num_chips != 0): # choose one rand. color at a time
-        color_chosen_name = sample(game_state_chips.keys(), 1)[0]         # color randomly chosen
+        color_chosen_name = sample(list(game_state_chips.keys()), 1)[0]         # color randomly chosen
         if game_state_chips[color_chosen_name] != 0:
             chip_actions.append(GEM_TO_SCRIPT_MAP[color_chosen_name])     # add to action list
             chips_taken += 1
@@ -762,7 +762,7 @@ if __name__ == '__main__':
     agent_1 = int(input("Please enter an agent identifying number: 0-5:"))
     agent_2 = int(input("Please enter another agent identifying number: 0-5:"))
     if (agent_1 >= 0 and agent_1 <= 5) and (agent_2 >= 0 and agent_2 <= 5):
-        play_game(agent_1, agent_2)
-        #play_game_stats(agent_1, agent_2, 100)
+        #play_game(agent_1, agent_2)
+        play_game_stats(agent_1, agent_2, 100)
     else:
         sys.exit('Invalid agent number input.')
