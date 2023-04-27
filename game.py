@@ -338,8 +338,10 @@ class SplendorGameState:
         if self.decks[level]:
             new_card = self.decks[level].pop()
         if new_card == None:
+            self.cards[level].pop(pos)
             return
         self.cards[level][pos] = new_card
+
 
     def action(self, action):
         player = self.players[self.player_to_move]

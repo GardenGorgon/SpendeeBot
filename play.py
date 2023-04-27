@@ -704,23 +704,7 @@ class AdversarialAgent2(Agent):
                         return Action(Action.purchase, None, (level, card_index))
                         #We just bought a card the opponent was going to buy
             
-            if(opponent.gems.total_items_amt() >= 10) or (player.gems.total_items_amt() > 10):
-                priority_cards = sort_cards_by_point_value(game_state.cards, game_state)
-                for level, cards in reversed(list(enumerate(game_state.cards))): # cards sets are ordered by their level
-                    for card_index, card in enumerate(cards):    # looking at each card in this level
-                        canAfford = True
-                        for color, amt in card.price.items():    # looking at the card's cost per gem
-                            agent_amt = 0
-                            agent_amt += player.num_color_card(color) # add discount
-                            agent_amt += player.gems.gems[color]      # actual # chips of this color
-                            if agent_amt < amt:
-                                canAfford = False
-                        if canAfford: # Buy it
-                            return Action(Action.purchase, None, (level, card_index))
-
-
-
-            """
+            
             if player.gems.total_items_amt() > 10:
                 #We have too many gems and should just buy any card we can
                 for level, cards in reversed(list(enumerate(game_state.cards))): # cards sets are ordered by their level
@@ -734,76 +718,11 @@ class AdversarialAgent2(Agent):
                                 canAfford = False
                         if canAfford: # Buy it
                             return Action(Action.purchase, None, (level, card_index))
-                #We should try and steal the opponents cards
-                return Action(Action.take, bestThreeCoins(game_state, opponent, priority_cards), None)
-            """
-            
                 
-        #We try and steal the coins the opponent would take
-        return Action(Action.take, bestThreeCoins(game_state, player, priority_cards), None) #You have to return every action as an action type lame
 
-def meanestThreeCoins(game_state, player, priorityListOfCards):
-    """ Using the priority listOfCards we pick out which 3 coins 
-    are most important to purchasing those cards. If we cant take 
-    the coins relevant to our highest priority card, we pick coins 
-    relevant to the second/third/fourth priority card """
-    bestCoins = ["color", "color", "color"]
-    playerGemsCopy = player.gems.gems.copy() # We need a copy because we don't want to alter the real thing
-    playerCardsCopy = player.cards.gems.copy()
-    bankGemsCopy = game_state.gems.gems.copy()
-
-    for index, coin in enumerate(bestCoins):# For each coin we are taking
-        colorWeWant = 0 # We are trying to fill in the color of the coin we want to take
-        for poppedEntry in priorityListOfCards.queue: # From highest priority card to lowest
-            card = poppedEntry[2]
-            lowestPile = 8 
-            
-            for color, amt in card.price.items(): # Iterate through the cost of the card 
-                if bankGemsCopy[color] != 0: # Skip piles we are out of
-                    if playerGemsCopy[color] < amt - playerCardsCopy[color]: # If we need this color. amtt is the cost of this color
-                        if bankGemsCopy[color] > amt - playerCardsCopy[color]:
-                            if bankGemsCopy[color] < lowestPile: # This is the rarest coin that we need
-                                lowestPile = bankGemsCopy[color]
-                                colorWeWant = color
-                            
-            
-                         
-            if colorWeWant != 0: # If we actually picked a coin after the previous block
-                bestCoins[index] = colorWeWant #Its official, we are picking that color
-                #playerGemsCopy[colorWeWant] += 1 #We add this coin to our gems pile copy from now on
-                bankGemsCopy[colorWeWant] -= 1 #So we subtract it from our bank copy
-
-                """
-                I just noticed this part could throw off our calculations.
-                If we end up taking a coin intended for a lower priority card, then if we can BUY that lower priority card
-                This algorithm will assume we're buying it.
-                We can change this later if we need to.
-                """
-                canWeAffordCard = True #We check to see if we can buy this desired card in this block of code
-                for color, amt in card.price.items():
-                    if playerGemsCopy[color] < amt - playerCardsCopy[color]: 
-                        canWeAffordCard = False
-                        #We cant buy it and will be skipping the next block
-
-                if canWeAffordCard == True: #If we can buy the card we took a coin for
-                    for color, amt in card.price.items(): 
-                        playerGemsCopy[color] =- (amt - playerCardsCopy[color]) #We anticipate we will buy that card and take away chips from our copy
-                    playerCardsCopy[card.gem] += 1 # Then we add the fake card to our copy of card gems
-                
-                break
+        return Action(Action.take, bestThreeCoins(game_state, player, priority_cards), None)#We try and steal the coins to buy the cards our opponent is prioritizing!
         
-        """After we have looked through the highest priority card
-        Ask: Can we afford this card
-        If so subtract the gems it would take from the playerGemsCopy
-        If not, don't"""
-    
-    #This converts the plaintext gem name into the script character associated with that gem
-    bestCoins = list(filter(lambda x:x != "color", bestCoins))
-    for i in range(len(bestCoins)):
-        temp = GEM_TO_SCRIPT_MAP[bestCoins[i]]
-        bestCoins[i] = temp
-    
-    return(bestCoins)
+
 
 def retrieve_all_cards(cards):
     allCards= list()
@@ -843,7 +762,7 @@ if __name__ == '__main__':
     agent_1 = int(input("Please enter an agent identifying number: 0-5:"))
     agent_2 = int(input("Please enter another agent identifying number: 0-5:"))
     if (agent_1 >= 0 and agent_1 <= 5) and (agent_2 >= 0 and agent_2 <= 5):
-        #play_game(agent_1, agent_2)
-        play_game_stats(agent_1, agent_2, 30)
+        play_game(agent_1, agent_2)
+        #play_game_stats(agent_1, agent_2, 100)
     else:
         sys.exit('Invalid agent number input.')
