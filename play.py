@@ -71,8 +71,65 @@ def play_game(agent_num1, agent_num2):
     print(game)
     print('best player:', game.best_player())
 
+def play_game_stats(agent_num1, agent_num2, iters):
+    player_names = ['Player 1 (AI)', 'Player 2 (AI)']
+    wins_dict = {'Player 1 (AI)' : 0, 'Player 2 (AI)': 0}
+    
+    
 
+    for i in range(iters):
+        rules = SplendorGameRules()
+        game = SplendorGameState(player_names, rules)
+        players = [] 
+        if(agent_num1 == 0):
+            players.append(HumanPlayer())
+            player_names[0] = 'Player 1'
+        elif(agent_num1 == 1): # range is [0, 5]
+            players.append(BasicAgent())
+        elif(agent_num1 == 2):
+            players.append(CheapAgent())
+        elif(agent_num1 == 3):
+            players.append(NobleAgent())
+        elif(agent_num1 == 4):
+            players.append(AdversarialAgent())
+        elif(agent_num1 == 5):
+            players.append(AdversarialAgent2())
+        
+        if(agent_num2 == 0):
+            players.append(HumanPlayer())
+            player_names[1] = 'Player 2'
+        elif(agent_num2 == 1): # range is [0, 5]
+            players.append(BasicAgent())
+        elif(agent_num2 == 2):
+            players.append(CheapAgent())
+        elif(agent_num2 == 3):
+            players.append(NobleAgent())
+        elif(agent_num2 == 4):
+            players.append(AdversarialAgent())
+        elif(agent_num2 == 5):
+            players.append(AdversarialAgent2())
+        while not game.check_win():
+            for n, player in enumerate(players):
+                print(game) # this STAYS
+                while True: # check for invalid action inputs
+                    action = player.get_action(game)
+                    try:
+                        game.action(action)
+                        break
+                    except AttributeError as err:
+                        print('Invalid action {}: {}'.format(str(action), str(err)))
+                        if player.is_ai:
+                            return
+                if player.is_ai:
+                    print(player_names[n] + ' move was: ' + str(action))
 
+        print("Final Game State:")
+        print(game)
+        print('best player:', game.best_player())
+        wins_dict[game.best_player()[1]] += 1    
+    #win_ratio = float(wins_dict[0])/float(iters) # player 1 to player 2 win rate
+    print("wins_dict: " + str(wins_dict))
+    # print("Player 1 won at this rate: " + str(win_ratio))
 
 # given a list of cards (from the shop) determines which card has the best cost to point ratio
 def cost_point_ratio(cards):
@@ -643,7 +700,6 @@ class AdversarialAgent2(Agent):
                     if canAfford and (cardWeWant is card): # Buy it
                         return Action(Action.purchase, None, (level, card_index))
 
-
         # otherwise pick-chip
         return Action(Action.take, bestThreeCoins(game_state, player, priority_cards), None) #You have to return every action as an action type lame
 
@@ -696,10 +752,11 @@ def sort_cards_by_cheapness(cards, game_state, player):
 
 if __name__ == '__main__':
     print("Agent Selections:")
-    print("0 - Player Controlled, 1 - BasicAgent, 2 - CheapAgent, 3 - NobleAgent, 4 - AdversarialAgent, 5 - S.O.B.Agent2")
+    print("0 - Player Controlled, 1 - BasicAgent, 2 - CheapAgent, 3 - NobleAgent, 4 - AdversarialAgent, 5 - S.O.B.Agent")
     agent_1 = int(input("Please enter an agent identifying number: 0-5:"))
     agent_2 = int(input("Please enter another agent identifying number: 0-5:"))
     if (agent_1 >= 0 and agent_1 <= 5) and (agent_2 >= 0 and agent_2 <= 5):
-        play_game(agent_1, agent_2)
+        # play_game(agent_1, agent_2)
+        play_game_stats(agent_1, agent_2, 10)
     else:
         sys.exit('Invalid agent number input.')
