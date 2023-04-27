@@ -17,18 +17,37 @@ class HumanPlayer:
         action_str = input(player_name + ' move: ')
         return Action.from_str(action_str)
 
-def play_game(agent_num):
+def play_game(agent_num1, agent_num2):
     player_names = ['Player 1 (AI)', 'Player 2 (AI)']
-    players = [NobleAgent()] 
-
-    if(agent_num == 0): # range is [0, 3]
+    players = [] 
+    
+    if(agent_num1 == 0):
+        players.append(HumanPlayer())
+        player_names[0] = 'Player 1'
+    elif(agent_num1 == 1): # range is [0, 5]
         players.append(BasicAgent())
-    elif(agent_num == 1):
+    elif(agent_num1 == 2):
         players.append(CheapAgent())
-    elif(agent_num == 2):
+    elif(agent_num1 == 3):
         players.append(NobleAgent())
-    elif(agent_num == 3):
+    elif(agent_num1 == 4):
         players.append(AdversarialAgent())
+    elif(agent_num1 == 5):
+        players.append(AdversarialAgent2())
+    
+    if(agent_num2 == 0):
+        players.append(HumanPlayer())
+        player_names[1] = 'Player 2'
+    elif(agent_num2 == 1): # range is [0, 5]
+        players.append(BasicAgent())
+    elif(agent_num2 == 2):
+        players.append(CheapAgent())
+    elif(agent_num2 == 3):
+        players.append(NobleAgent())
+    elif(agent_num2 == 4):
+        players.append(AdversarialAgent())
+    elif(agent_num2 == 5):
+        players.append(AdversarialAgent2())
 
     rules = SplendorGameRules()
     game = SplendorGameState(player_names, rules)
@@ -46,8 +65,9 @@ def play_game(agent_num):
                     if player.is_ai:
                         return
             if player.is_ai:
-                print(player_names[n] + ' move: ' + str(action))
+                print(player_names[n] + ' move was: ' + str(action))
 
+    print("Final Game State:")
     print(game)
     print('best player:', game.best_player())
 
@@ -303,6 +323,11 @@ class NobleAgent(Agent):
 
 class AdversarialAgent(Agent): 
     """can remove all of this if you had a different strategy in mind! This is based off Lilly's whiteboard"""
+    #Note for after dinner: Going to tune this agent so it prioritizes cards the opponent can't buy yet, but they are close
+    #Step 1: Buy cards the opponent can buy, if you cant
+    #Step 2: Buy Carsd the opponent can almost buy, if you cant
+    #Step 3: Take the coins the opponent needs to buy those step 2 cards,
+    #Step 4: If you cant block a buy, just buy a card thats worth points
     is_ai = True 
 
     def get_action(self, game_state):
@@ -522,9 +547,159 @@ def chip_colors_given_cards(preferred_cards, game_state):
     return chip_actions
 
 
+
+class AdversarialAgent2(Agent): 
+    """can remove all of this if you had a different strategy in mind! This is based off Lilly's whiteboard"""
+    #Note for after dinner: Going to tune this agent so it prioritizes cards the opponent can't buy yet, but they are close
+    #Step 1: Buy cards the opponent can buy, if you cant
+    #Step 2: Buy Carsd the opponent can almost buy, if you cant
+    #Step 3: Take the coins the opponent needs to buy those step 2 cards,
+    #Step 4: If you cant block a buy, just buy a card thats worth points
+    is_ai = True 
+
+    def get_action(self, game_state):
+        # what I tried here was basically having the agent check if it can buy a card that's 
+        # affordable to the opponent and to then buy it if it can
+
+        # player variables
+        player = game_state.players[game_state.player_to_move]
+
+        # opponent variables 
+        range_players = list(range(len(game_state.players))) # I want a list of indices for players
+        opponent_index = None
+        for i in range_players:
+            if i != game_state.player_to_move: # compare index to THIS agent index
+                opponent_index = i             # if not equal, this is probably the opponent index
+        opponent = game_state.players[opponent_index]
+        affordable_cards_opp = [] # what cards can opp. buy?
+        # We want to look at our opponent's state
+
+        # look at opponents's current cards/chips and determine what they can buy
+        for level, cards in reversed(list(enumerate(game_state.cards))): # cards sets are ordered by their level
+            for card_index, card in enumerate(cards):    # looking at each card in this level
+                #print(str(card))
+                canAfford = True
+                cost = 0 # this is the total cost across all gem types for this card
+                for color, amt in card.price.items():    # looking at the card's cost per gem
+                    agent_amt = 0
+                    agent_amt += opponent.num_color_card(color) # add discount
+                    agent_amt += opponent.gems.gems[color]      # actual # chips of this color
+                    cost += amt - opponent.num_color_card(color)
+                    if agent_amt < amt: # can we buy?
+                        canAfford = False
+                if canAfford: # Here, we make the change. We want to keep track of all cards opp. can afford
+                    affordable_cards_opp.append([level, card_index, card, cost])
+        
+        # based off the board cards they can buy, see if we can buy any. Then buy that...
+        cards_from_opp_player_can_buy = [] # affordable_cards_opp is a tuple list of [level, card_index, card, cost]
+        if (len(affordable_cards_opp) > 0):
+            for i, tuple in enumerate(affordable_cards_opp): # looking at each card in this level
+                level = tuple[0] # getting card info here
+                card_index = tuple[1] 
+                card = tuple[2]
+                cost = tuple[3]
+                canAfford = True
+                player_cost = 0 # this is the total cost across all gem types for this card
+                for color, amt in card.price.items():    # looking at the card's cost per gem
+                    agent_amt = 0
+                    agent_amt += player.num_color_card(color) # add discount
+                    agent_amt += player.gems.gems[color]      # actual # chips of this color
+                    player_cost += amt - player.num_color_card(color)
+                    if agent_amt < amt: # can we buy?
+                        canAfford = False
+                if canAfford: # Here, we make the change. We want to keep track of all cards opp. can afford
+                    cards_from_opp_player_can_buy.append([level, card_index, card, player_cost])
+        
+        if (len(cards_from_opp_player_can_buy) > 0):
+            # buy the first card you can? wait actually, I think I need to reverse that list here
+            # so if all is ordered... I think first card element should be card with highest tier?
+
+            cards_from_opp_player_can_buy = list(reversed(cards_from_opp_player_can_buy))
+
+            card_level = cards_from_opp_player_can_buy[0][0]
+            card_index = cards_from_opp_player_can_buy[0][1]
+            card_tuple_to_buy = (card_level, card_index)
+            return Action(Action.purchase, None, card_tuple_to_buy) # BUY
+
+
+        """Everything above is to snipe the most expensive card the opponent can buy. Beneath here is going to be the goal of taking coins that stop opponent from
+        getting cards they can almost afford"""
+        priority_cards = sort_cards_by_cheapness(game_state.cards, game_state, opponent)
+        
+        for entry in priority_cards.queue: #Iterate through all of our priority cards
+            cardWeWant = entry[2] #This is the current card we are checking
+
+            """This code shamelessly copied from basicagent"""
+            # First, look if it can afford any card
+            for level, cards in reversed(list(enumerate(game_state.cards))): # cards sets are ordered by their level
+                for card_index, card in enumerate(cards):    # looking at each card in this level
+                    canAfford = True
+                    for color, amt in card.price.items():    # looking at the card's cost per gem
+                        agent_amt = 0
+                        agent_amt += player.num_color_card(color) # add discount
+                        agent_amt += player.gems.gems[color]      # actual # chips of this color
+                        if agent_amt < amt:
+                            canAfford = False
+                    if canAfford and (cardWeWant is card): # Buy it
+                        return Action(Action.purchase, None, (level, card_index))
+
+
+        # otherwise pick-chip
+        return Action(Action.take, bestThreeCoins(game_state, player, priority_cards), None) #You have to return every action as an action type lame
+
+
+
+
+        # if not, then default to either NobleAgent or CheapAgent strategy
+        # chip_actions = rand_choose_cards(game_state) # If no cards are affordable, choose random chips
+
+        # Uhhhh what I think I COULD do here is use chip_colors_given_cards() to return a set of chips
+        # GIVEN the set of affordable cards from the opponent
+        opps_preferred_cards = [tuple[2] for tuple in affordable_cards_opp] # [level, card_index, card, cost]
+        chip_actions_sabotage_opp = chip_colors_given_cards(opps_preferred_cards, game_state) # wait lemme think abt it
+        # maybe do the same to find best chips for THIS agent, evaluate between the two sets, and return the one
+        # that's determined (somehow) to be more valuable? uhhhhh
+ 
+        return Action(Action.take, chip_actions_sabotage_opp, None)
+
+def retrieve_all_cards(cards):
+    allCards= list()
+    for card in reduce(lambda x, y : x + y, cards):
+        allCards.append(card)
+    return allCards
+
+def sort_cards_by_cheapness(cards, game_state, player): 
+        priority_card_queue = PriorityQueue()
+        preferred_cards = retrieve_all_cards(cards)
+
+        counter = 0
+        while(len(preferred_cards) > 0):
+            cheapest_card = preferred_cards.pop(0) 
+            adjustedCardCost = 0
+            canBuy = True
+            counter += 1
+            for color, amt in cheapest_card.price.items(): # Iterate through the cost of the card
+                #color is the color at this layer, amount is the required cost at  this layer
+                adjustedCardCost += max(0, (amt - player.cards.gems[color])) #Don't want to assign negative value if we have more discount than the cost
+
+                if adjustedCardCost > player.gems.gems[color]: #Here we make some adjustments. Its not worth prioritizing a card that the enemy is going to buy next turn, so we ignore those
+                    canBuy = False
+        
+            if canBuy == False:#If the enemy player cant buy the card it goes into the list. Then we will try and buy it/take coins for it.
+                priority_card_queue.put((adjustedCardCost, counter, cheapest_card))
+
+
+        if len(preferred_cards) == 0: #If we can't really cut the player off 
+            priority_card_queue = sort_cards_by_point_value(cards, game_state)
+
+        return priority_card_queue
+
 if __name__ == '__main__':
-    agent_num = int(input("Please enter an agent identifying number: 0-3:"))
-    if agent_num >= 0 and agent_num <= 3:
-        play_game(agent_num)
+    print("Agent Selections:")
+    print("0 - Player Controlled, 1 - BasicAgent, 2 - CheapAgent, 3 - NobleAgent, 4 - AdversarialAgent, 5 - S.O.B.Agent2")
+    agent_1 = int(input("Please enter an agent identifying number: 0-5:"))
+    agent_2 = int(input("Please enter another agent identifying number: 0-5:"))
+    if (agent_1 >= 0 and agent_1 <= 5) and (agent_2 >= 0 and agent_2 <= 5):
+        play_game(agent_1, agent_2)
     else:
         sys.exit('Invalid agent number input.')

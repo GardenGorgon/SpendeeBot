@@ -310,7 +310,7 @@ class SplendorGameState:
         self.players = [SplendorPlayerState(name) for name in player_names]
 
     def __str__(self):
-        s = 'turn:' + str(self.num_moves) + ' player:' + str(self.player_to_move) + '\n'
+        s = 'turn:' + str(self.num_moves) + ' player:' + str(self.player_to_move+1) + '\n'
         
         s += 'nobles: '
         for noble in self.nobles:
