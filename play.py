@@ -762,7 +762,7 @@ if __name__ == '__main__':
     agent_1 = int(input("Please enter an agent identifying number: 0-5:"))
     agent_2 = int(input("Please enter another agent identifying number: 0-5:"))
     if (agent_1 >= 0 and agent_1 <= 5) and (agent_2 >= 0 and agent_2 <= 5):
-        #play_game(agent_1, agent_2)
-        play_game_stats(agent_1, agent_2, 100)
+        play_game(agent_1, agent_2)
+        #play_game_stats(agent_1, agent_2, 100)
     else:
         sys.exit('Invalid agent number input.')
