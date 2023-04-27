@@ -1,0 +1,610 @@
+turn:0 player:0
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white1|b0r2g3k2w0] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [white0|b2r0g0k2w0] [green0|b2r2g0k0w0] [white0|b0r2g0k1w0] [red0|b1r0g1k1w1] 
+gems:b7r7g7k7w7
+AI Agent 1| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b0r0g0k0w0
+
+AI Agent 2| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b0r0g0k0w0
+
+
+/Users/stephaniemartinez/Downloads/CS4100/project/SpendeeBot/play.py:51: DeprecationWarning: Sampling from a set deprecated
+since Python 3.9 and will be removed in a subsequent version.
+  color_chosen_name = sample(game_state_chips.keys(), 1)[0]         # color randomly chosen
+AI Agent 1 move: tggw
+turn:0 player:1
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white1|b0r2g3k2w0] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [white0|b2r0g0k2w0] [green0|b2r2g0k0w0] [white0|b0r2g0k1w0] [red0|b1r0g1k1w1] 
+gems:b7r7g5k7w6
+AI Agent 1| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b0r0g2k0w1
+
+AI Agent 2| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b0r0g0k0w0
+
+
+AI Agent 2 move: tgwr
+turn:1 player:0
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white1|b0r2g3k2w0] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [white0|b2r0g0k2w0] [green0|b2r2g0k0w0] [white0|b0r2g0k1w0] [red0|b1r0g1k1w1] 
+gems:b7r6g4k7w5
+AI Agent 1| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b0r0g2k0w1
+
+AI Agent 2| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b0r1g1k0w1
+
+
+AI Agent 1 move: tgwg
+turn:1 player:1
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white1|b0r2g3k2w0] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [white0|b2r0g0k2w0] [green0|b2r2g0k0w0] [white0|b0r2g0k1w0] [red0|b1r0g1k1w1] 
+gems:b7r6g2k7w4
+AI Agent 1| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b0r0g4k0w2
+
+AI Agent 2| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b0r1g1k0w1
+
+
+AI Agent 2 move: tkgk
+turn:2 player:0
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white1|b0r2g3k2w0] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [white0|b2r0g0k2w0] [green0|b2r2g0k0w0] [white0|b0r2g0k1w0] [red0|b1r0g1k1w1] 
+gems:b7r6g1k5w4
+AI Agent 1| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b0r0g4k0w2
+
+AI Agent 2| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b0r1g2k2w1
+
+
+AI Agent 1 move: tkrw
+turn:2 player:1
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white1|b0r2g3k2w0] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [white0|b2r0g0k2w0] [green0|b2r2g0k0w0] [white0|b0r2g0k1w0] [red0|b1r0g1k1w1] 
+gems:b7r5g1k4w3
+AI Agent 1| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b0r1g4k1w3
+
+AI Agent 2| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b0r1g2k2w1
+
+
+AI Agent 2 move: tbrg
+turn:3 player:0
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white1|b0r2g3k2w0] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [white0|b2r0g0k2w0] [green0|b2r2g0k0w0] [white0|b0r2g0k1w0] [red0|b1r0g1k1w1] 
+gems:b6r4g0k4w3
+AI Agent 1| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b0r1g4k1w3
+
+AI Agent 2| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b1r2g3k2w1
+
+
+AI Agent 1 move: tbrr
+turn:3 player:1
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white1|b0r2g3k2w0] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [white0|b2r0g0k2w0] [green0|b2r2g0k0w0] [white0|b0r2g0k1w0] [red0|b1r0g1k1w1] 
+gems:b5r2g0k4w3
+AI Agent 1| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b1r3g4k1w3
+
+AI Agent 2| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b1r2g3k2w1
+
+
+AI Agent 2 move: 1b1
+turn:4 player:0
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white3|b0r0g0k0w6] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [white0|b2r0g0k2w0] [green0|b2r2g0k0w0] [white0|b0r2g0k1w0] [red0|b1r0g1k1w1] 
+gems:b5r4g3k6w3
+AI Agent 1| points: 0
+cards:
+b0r0g0k0w0
+gems:
+b1r3g4k1w3
+
+AI Agent 2| points: 1
+cards:
+b0r0g0k0w1
+gems:
+b1r0g0k0w1
+
+
+AI Agent 1 move: 0b2
+turn:4 player:1
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white3|b0r0g0k0w6] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [white0|b2r0g0k2w0] [green0|b2r2g0k0w0] [green0|b0r3g0k0w0] [red0|b1r0g1k1w1] 
+gems:b5r6g3k7w3
+AI Agent 1| points: 0
+cards:
+b0r0g0k0w1
+gems:
+b1r1g4k0w3
+
+AI Agent 2| points: 1
+cards:
+b0r0g0k0w1
+gems:
+b1r0g0k0w1
+
+
+AI Agent 2 move: twgk
+turn:5 player:0
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white3|b0r0g0k0w6] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [white0|b2r0g0k2w0] [green0|b2r2g0k0w0] [green0|b0r3g0k0w0] [red0|b1r0g1k1w1] 
+gems:b5r6g2k6w2
+AI Agent 1| points: 0
+cards:
+b0r0g0k0w1
+gems:
+b1r1g4k0w3
+
+AI Agent 2| points: 1
+cards:
+b0r0g0k0w1
+gems:
+b1r0g1k1w2
+
+
+AI Agent 1 move: twgb
+turn:5 player:1
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white3|b0r0g0k0w6] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [white0|b2r0g0k2w0] [green0|b2r2g0k0w0] [green0|b0r3g0k0w0] [red0|b1r0g1k1w1] 
+gems:b4r6g1k6w1
+AI Agent 1| points: 0
+cards:
+b0r0g0k0w1
+gems:
+b2r1g5k0w4
+
+AI Agent 2| points: 1
+cards:
+b0r0g0k0w1
+gems:
+b1r0g1k1w2
+
+
+AI Agent 2 move: 0b3
+turn:6 player:0
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white3|b0r0g0k0w6] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [white0|b2r0g0k2w0] [green0|b2r2g0k0w0] [green0|b0r3g0k0w0] [black0|b1r1g1k0w1] 
+gems:b5r6g2k7w1
+AI Agent 1| points: 0
+cards:
+b0r0g0k0w1
+gems:
+b2r1g5k0w4
+
+AI Agent 2| points: 1
+cards:
+b0r1g0k0w1
+gems:
+b0r0g0k0w2
+
+
+AI Agent 1 move: 0b3
+turn:6 player:1
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white3|b0r0g0k0w6] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [white0|b2r0g0k2w0] [green0|b2r2g0k0w0] [green0|b0r3g0k0w0] [blue0|b0r1g1k1w1] 
+gems:b6r7g3k7w1
+AI Agent 1| points: 0
+cards:
+b0r0g0k1w1
+gems:
+b1r0g4k0w4
+
+AI Agent 2| points: 1
+cards:
+b0r1g0k0w1
+gems:
+b0r0g0k0w2
+
+
+AI Agent 2 move: tgkb
+turn:7 player:0
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white3|b0r0g0k0w6] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [white0|b2r0g0k2w0] [green0|b2r2g0k0w0] [green0|b0r3g0k0w0] [blue0|b0r1g1k1w1] 
+gems:b5r7g2k6w1
+AI Agent 1| points: 0
+cards:
+b0r0g0k1w1
+gems:
+b1r0g4k0w4
+
+AI Agent 2| points: 1
+cards:
+b0r1g0k0w1
+gems:
+b1r0g1k1w2
+
+
+AI Agent 1 move: trrk
+turn:7 player:1
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white3|b0r0g0k0w6] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [white0|b2r0g0k2w0] [green0|b2r2g0k0w0] [green0|b0r3g0k0w0] [blue0|b0r1g1k1w1] 
+gems:b5r5g2k5w1
+AI Agent 1| points: 0
+cards:
+b0r0g0k1w1
+gems:
+b1r2g4k1w4
+
+AI Agent 2| points: 1
+cards:
+b0r1g0k0w1
+gems:
+b1r0g1k1w2
+
+
+AI Agent 2 move: 0b3
+turn:8 player:0
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white3|b0r0g0k0w6] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [white0|b2r0g0k2w0] [green0|b2r2g0k0w0] [green0|b0r3g0k0w0] [green1|b0r0g0k4w0] 
+gems:b5r5g3k6w1
+AI Agent 1| points: 0
+cards:
+b0r0g0k1w1
+gems:
+b1r2g4k1w4
+
+AI Agent 2| points: 1
+cards:
+b1r1g0k0w1
+gems:
+b1r0g0k0w2
+
+
+You already have the max number of gems! Now I'm going to take some away at random! Bwa ha ha ha!
+Removed these gems: wrr
+AI Agent 1 move: tbbb
+turn:8 player:1
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white3|b0r0g0k0w6] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [white0|b2r0g0k2w0] [green0|b2r2g0k0w0] [green0|b0r3g0k0w0] [green1|b0r0g0k4w0] 
+gems:b5r7g3k6w2
+AI Agent 1| points: 0
+cards:
+b0r0g0k1w1
+gems:
+b1r0g4k1w3
+
+AI Agent 2| points: 1
+cards:
+b1r1g0k0w1
+gems:
+b1r0g0k0w2
+
+
+AI Agent 2 move: twwg
+turn:9 player:0
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white3|b0r0g0k0w6] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [white0|b2r0g0k2w0] [green0|b2r2g0k0w0] [green0|b0r3g0k0w0] [green1|b0r0g0k4w0] 
+gems:b5r7g2k6w0
+AI Agent 1| points: 0
+cards:
+b0r0g0k1w1
+gems:
+b1r0g4k1w3
+
+AI Agent 2| points: 1
+cards:
+b1r1g0k0w1
+gems:
+b1r0g1k0w4
+
+
+AI Agent 1 move: trrb
+turn:9 player:1
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white3|b0r0g0k0w6] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [white0|b2r0g0k2w0] [green0|b2r2g0k0w0] [green0|b0r3g0k0w0] [green1|b0r0g0k4w0] 
+gems:b4r5g2k6w0
+AI Agent 1| points: 0
+cards:
+b0r0g0k1w1
+gems:
+b2r2g4k1w3
+
+AI Agent 2| points: 1
+cards:
+b1r1g0k0w1
+gems:
+b1r0g1k0w4
+
+
+AI Agent 2 move: tgkg
+turn:10 player:0
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white3|b0r0g0k0w6] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [white0|b2r0g0k2w0] [green0|b2r2g0k0w0] [green0|b0r3g0k0w0] [green1|b0r0g0k4w0] 
+gems:b4r5g0k5w0
+AI Agent 1| points: 0
+cards:
+b0r0g0k1w1
+gems:
+b2r2g4k1w3
+
+AI Agent 2| points: 1
+cards:
+b1r1g0k0w1
+gems:
+b1r0g3k1w4
+
+
+AI Agent 1 move: 0b0
+turn:10 player:1
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white3|b0r0g0k0w6] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [red0|b0r2g0k0w2] [green0|b2r2g0k0w0] [green0|b0r3g0k0w0] [green1|b0r0g0k4w0] 
+gems:b6r5g0k6w0
+AI Agent 1| points: 0
+cards:
+b0r0g0k1w2
+gems:
+b0r2g4k0w3
+
+AI Agent 2| points: 1
+cards:
+b1r1g0k0w1
+gems:
+b1r0g3k1w4
+
+
+AI Agent 2 move: tkkr
+turn:11 player:0
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white3|b0r0g0k0w6] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [red0|b0r2g0k0w2] [green0|b2r2g0k0w0] [green0|b0r3g0k0w0] [green1|b0r0g0k4w0] 
+gems:b6r4g0k4w0
+AI Agent 1| points: 0
+cards:
+b0r0g0k1w2
+gems:
+b0r2g4k0w3
+
+AI Agent 2| points: 1
+cards:
+b1r1g0k0w1
+gems:
+b1r1g3k3w4
+
+
+AI Agent 1 move: 0b0
+turn:11 player:1
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white3|b0r0g0k0w6] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [blue1|b0r4g0k0w0] [green0|b2r2g0k0w0] [green0|b0r3g0k0w0] [green1|b0r0g0k4w0] 
+gems:b6r6g0k4w0
+AI Agent 1| points: 0
+cards:
+b0r1g0k1w2
+gems:
+b0r0g4k0w3
+
+AI Agent 2| points: 1
+cards:
+b1r1g0k0w1
+gems:
+b1r1g3k3w4
+
+
+AI Agent 2 move: 0b1
+turn:12 player:0
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white3|b0r0g0k0w6] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [blue1|b0r4g0k0w0] [black1|b4r0g0k0w0] [green0|b0r3g0k0w0] [green1|b0r0g0k4w0] 
+gems:b7r7g0k4w0
+AI Agent 1| points: 0
+cards:
+b0r1g0k1w2
+gems:
+b0r0g4k0w3
+
+AI Agent 2| points: 1
+cards:
+b1r1g1k0w1
+gems:
+b0r0g3k3w4
+
+
+AI Agent 1 move: tbrk
+turn:12 player:1
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white3|b0r0g0k0w6] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [blue1|b0r4g0k0w0] [black1|b4r0g0k0w0] [green0|b0r3g0k0w0] [green1|b0r0g0k4w0] 
+gems:b6r6g0k3w0
+AI Agent 1| points: 0
+cards:
+b0r1g0k1w2
+gems:
+b1r1g4k1w3
+
+AI Agent 2| points: 1
+cards:
+b1r1g1k0w1
+gems:
+b0r0g3k3w4
+
+
+You already have the max number of gems! Now I'm going to take some away at random! Bwa ha ha ha!
+Removed these gems: ggw
+AI Agent 2 move: trbb
+turn:13 player:0
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white3|b0r0g0k0w6] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [blue1|b0r4g0k0w0] [black1|b4r0g0k0w0] [green0|b0r3g0k0w0] [green1|b0r0g0k4w0] 
+gems:b6r6g2k3w1
+AI Agent 1| points: 0
+cards:
+b0r1g0k1w2
+gems:
+b1r1g4k1w3
+
+AI Agent 2| points: 1
+cards:
+b1r1g1k0w1
+gems:
+b0r0g1k3w3
+
+
+You already have the max number of gems! Now I'm going to take some away at random! Bwa ha ha ha!
+Removed these gems: rbw
+AI Agent 1 move: tkbk
+turn:13 player:1
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white3|b0r0g0k0w6] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [blue1|b0r4g0k0w0] [black1|b4r0g0k0w0] [green0|b0r3g0k0w0] [green1|b0r0g0k4w0] 
+gems:b7r7g2k3w2
+AI Agent 1| points: 0
+cards:
+b0r1g0k1w2
+gems:
+b0r0g4k1w2
+
+AI Agent 2| points: 1
+cards:
+b1r1g1k0w1
+gems:
+b0r0g1k3w3
+
+
+AI Agent 2 move: tkbb
+turn:14 player:0
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white3|b0r0g0k0w6] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [blue1|b0r4g0k0w0] [black1|b4r0g0k0w0] [green0|b0r3g0k0w0] [green1|b0r0g0k4w0] 
+gems:b5r7g2k2w2
+AI Agent 1| points: 0
+cards:
+b0r1g0k1w2
+gems:
+b0r0g4k1w2
+
+AI Agent 2| points: 1
+cards:
+b1r1g1k0w1
+gems:
+b2r0g1k4w3
+
+
+AI Agent 1 move: trwk
+turn:14 player:1
+nobles: [3|b0r4g4k0w0] [3|b0r3g3k3w0] [3|b0r4g0k4w0] 
+3: [white4|b0r3g0k6w3] [black4|b0r7g0k0w0] [green4|b6r0g3k0w3] [red4|b0r0g7k0w0] 
+2: [white2|b0r5g0k3w0] [white3|b0r0g0k0w6] [blue2|b5r0g0k0w0] [white1|b3r3g0k0w2] 
+1: [blue1|b0r4g0k0w0] [black1|b4r0g0k0w0] [green0|b0r3g0k0w0] [green1|b0r0g0k4w0] 
+gems:b5r6g2k1w1
+AI Agent 1| points: 0
+cards:
+b0r1g0k1w2
+gems:
+b0r1g4k2w3
+
+AI Agent 2| points: 1
+cards:
+b1r1g1k0w1
+gems:
+b2r0g1k4w3
+
+
+AI Agent 2 move: 0b3
+best player: (2, 'AI Agent 2')
